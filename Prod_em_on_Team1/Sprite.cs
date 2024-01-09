@@ -1,9 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Prod_em_on_Team1
 {
@@ -20,6 +16,30 @@ namespace Prod_em_on_Team1
         public virtual void Update()
         {
 
+        }
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(_texture, Position, Color.White);
+        }
+
+        public Vector2 Position
+        {
+            get; set;
+        }
+
+        public Rectangle Rectangle
+        {
+            get; set;
+        }
+
+        public Texture2D Texture
+        {
+            get { return _texture; }
+        }
+        public int Lane
+        {
+            get; set;
         }
     }
 }
