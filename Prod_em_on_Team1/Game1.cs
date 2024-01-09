@@ -26,7 +26,7 @@ namespace Prod_em_on_Team1
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            //Useless comment
+            //Useless comment 2
             // TODO: use this.Content to load your game content here
         }
 
