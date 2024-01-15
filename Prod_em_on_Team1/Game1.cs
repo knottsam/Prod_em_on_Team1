@@ -10,7 +10,8 @@ namespace Prod_em_on_Team1
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        public static float Time;
+        private Timer _timer;
+        private float _time;
 
         public Game1()
         {
@@ -23,7 +24,8 @@ namespace Prod_em_on_Team1
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+
+            _timer = new Timer();
 
             base.Initialize();
         }
@@ -39,8 +41,14 @@ namespace Prod_em_on_Team1
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            if(Keyboard.GetState().IsKeyDown(Keys.G))
+            {
+                _time = _timer.GetTime();
+                string thing = "this does nothign";
+            }
+              
 
-            Time = (float)gameTime.ElapsedTime.TotalSeconds;
+            _timer.Update(gameTime);
 
             base.Update(gameTime);
         }
