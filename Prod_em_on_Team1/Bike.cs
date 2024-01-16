@@ -10,8 +10,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Prod_em_on_Team1
 {
-    internal class Bike
+    internal class Bike : Sprite
     {
+        
+
+        public float SPEED {get;set;}
+        public float TEMP { get; set; }
+
+        public bool airbourne { get; set; }
 
 
     }
