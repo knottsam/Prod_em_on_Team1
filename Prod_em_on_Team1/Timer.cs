@@ -1,26 +1,28 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Prod_em_on_Team1
 {
     internal class Timer
     {
         private bool _active = true;
+        private double _timeStarted;
         public Timer() { }
         
         public void Update(GameTime gameTime)
         {
             if(_active)
             {
-                TimePassed = (float)gameTime.TotalGameTime.TotalSeconds;
+                TimePassed = gameTime.TotalGameTime.TotalSeconds - _timeStarted;
             }
         }
-        public float GetTime()
+
+        public void StartTimer(GameTime gameTime)
+        {
+            _active = true;
+            _timeStarted = (float)gameTime.TotalGameTime.TotalSeconds;
+        }
+        public double GetTime()
         {
             _active = false;
             return TimePassed;
@@ -31,7 +33,7 @@ namespace Prod_em_on_Team1
             get { return _active; }
             set { _active = value; }
         }
-        public float TimePassed
+        public double TimePassed
         {
             get; private set;
         }
