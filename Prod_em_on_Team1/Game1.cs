@@ -8,7 +8,7 @@ namespace Prod_em_on_Team1
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        //Worthless comment
+        //Worthless comment!
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
