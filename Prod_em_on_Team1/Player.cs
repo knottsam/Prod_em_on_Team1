@@ -26,22 +26,24 @@ namespace Prod_em_on_Team1
             Box = inBox;
             Lane = inLane;
             Speed = inSpeed;
+
         }
 
         public override void LoadContent(ContentManager myContent)
         {
             myContent.RootDirectory = "Content";
             // add textures
-            _textureForward = myContent.Load<Texture2D>("");//ADD TEXTURES
-            _textureTurningRight = myContent.Load<Texture2D>("");//ADD TEXTURES
-            _textureTurningLeft = myContent.Load<Texture2D>("");//ADD TEXTURES
-            _textureVibrate = myContent.Load<Texture2D>("");//ADD TEXTURES
+            _textureForward = myContent.Load<Texture2D>("BikeForward");
+            //_textureTurningRight = myContent.Load<Texture2D>("");//ADD TEXTURES
+            //_textureTurningLeft = myContent.Load<Texture2D>("");//ADD TEXTURES
+            //_textureVibrate = myContent.Load<Texture2D>("");//ADD TEXTURES
 
         }
 
         public override void Update()
         {
             Position = new Vector2(Position.X + Speed, Position.Y);
+            _texture = _textureForward;
 
             if(Keyboard.GetState().IsKeyDown(Keys.W) && Lane < 3)
             {
@@ -53,6 +55,7 @@ namespace Prod_em_on_Team1
             }
             if(Keyboard.GetState().IsKeyDown(Keys.Space))
             {
+                Speed = 5;
                 //increase speed
                 //increase temperature
             }

@@ -6,7 +6,8 @@ namespace Prod_em_on_Team1
 {
     internal class Sprite
     {
-        private Texture2D _texture;
+        protected Texture2D _texture;
+        protected float rotation;
         private Vector2 _position;
         private Rectangle _box;
         private int _lane = 0;
@@ -22,6 +23,8 @@ namespace Prod_em_on_Team1
             _box = inBox;
             _lane = inLane;
             _speed = inSpeed;
+
+            Origin = new Vector2(0, 0);
         }
 
         public virtual void LoadContent(ContentManager myContent)
@@ -37,13 +40,19 @@ namespace Prod_em_on_Team1
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, Position, Color.White);
+            //spriteBatch.Draw(_texture, _position, Color.White);
+            spriteBatch.Draw(_texture, _position, null, Color.White, rotation, Origin, 10, SpriteEffects.None, 0);
         }
 
         public Vector2 Position
         {
             get { return _position; }
             set { _position = value; }
+        }
+
+        public Vector2 Origin
+        {
+            get; set;
         }
 
         public Rectangle Box

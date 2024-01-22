@@ -26,7 +26,7 @@ namespace Prod_em_on_Team1
         {
 
             _timer = new Timer();
-            _player = new Player();//add arguments
+            _player = new Player(new Vector2(200,200), new Rectangle(500,500,32,32), 0, 0);
 
             base.Initialize();
         }
@@ -46,6 +46,7 @@ namespace Prod_em_on_Team1
 
 
             _timer.Update(gameTime);
+            _player.Update();
 
 
             base.Update(gameTime);
@@ -54,8 +55,12 @@ namespace Prod_em_on_Team1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            _spriteBatch.Begin();
+
+            _player.Draw(gameTime, _spriteBatch);
 
 
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
