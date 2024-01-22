@@ -17,11 +17,14 @@ namespace Prod_em_on_Team1
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+        }
         protected override void Initialize() 
         {
             // TODO: Add your initialization logic here
-            map1 = new();
+            map1 = new TrackMap(Content);
             base.Initialize();
+            _graphics.PreferredBackBufferWidth = 32;
+            _graphics.PreferredBackBufferHeight = 32;
         }
 
         protected override void LoadContent()
@@ -45,7 +48,7 @@ namespace Prod_em_on_Team1
         {
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
-            map1.Draw();
+            map1.Draw(_spriteBatch);
             _spriteBatch.End();
            
 

@@ -4,10 +4,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 
-public static class Tile
+public class Tile
 {
-	public Tile()
-	{
+    public Tile() { }
+	
 
     private readonly Texture2D _texture;
     public Vector2 Position { get; protected set; }
@@ -20,9 +20,9 @@ public static class Tile
         Origin = new(_texture.Width / 2, _texture.Height / 2);
     }
 
-    public void Draw()
+    public void Draw(SpriteBatch _spriteBatch)
     {
-        Globals.SpriteBatch.Draw(_texture, Position, null, Color.White, 0f, Origin, 1f, SpriteEffects.None, 0f);
+        _spriteBatch.Draw(_texture, Position, null, Color.White, 0f, Origin, 1f, SpriteEffects.None, 0f);
     }
 }
-}
+
