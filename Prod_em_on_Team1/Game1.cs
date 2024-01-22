@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Threading;
 
 namespace Prod_em_on_Team1
 {
@@ -14,12 +15,10 @@ namespace Prod_em_on_Team1
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-        }
-
-        protected override void Initialize()
+        protected override void Initialize() 
         {
             // TODO: Add your initialization logic here
-
+            Timer
             base.Initialize();
         }
 
@@ -42,9 +41,9 @@ namespace Prod_em_on_Team1
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
+           
 
             base.Draw(gameTime);
         }
