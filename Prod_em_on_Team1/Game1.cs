@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Data;
 using System.Threading;
 
 namespace Prod_em_on_Team1
@@ -9,6 +10,7 @@ namespace Prod_em_on_Team1
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private TrackMap map1;
 
         public Game1()
         {
@@ -18,7 +20,7 @@ namespace Prod_em_on_Team1
         protected override void Initialize() 
         {
             // TODO: Add your initialization logic here
-            Timer
+            map1 = new();
             base.Initialize();
         }
 
@@ -42,7 +44,9 @@ namespace Prod_em_on_Team1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
+            _spriteBatch.Begin();
+            map1.Draw();
+            _spriteBatch.End();
            
 
             base.Draw(gameTime);
