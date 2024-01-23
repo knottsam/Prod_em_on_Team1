@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System.Threading;
 
 namespace Prod_em_on_Team1
 {
@@ -13,6 +13,7 @@ namespace Prod_em_on_Team1
         private Texture2D _textureTurningLeft;
         private Texture2D _textureVibrate;
         private int _temperature;
+        private bool WReleased = true, SReleased = true;
         
 
 
@@ -22,10 +23,10 @@ namespace Prod_em_on_Team1
         public Player(Vector2 inPosition, Rectangle inBox, int inLane, int inSpeed)
             : base(inPosition, inBox, inLane, inSpeed)
         {
-            Position = inPosition;
-            Box = inBox;
-            Lane = inLane;
-            Speed = inSpeed;
+            _position = inPosition;
+            _box = inBox;
+            _lane = inLane;
+            _speed = inSpeed;
 
         }
 
@@ -42,16 +43,32 @@ namespace Prod_em_on_Team1
 
         public override void Update()
         {
-            Position = new Vector2(Position.X + Speed, Position.Y);
             _texture = _textureForward;
 
-            if(Keyboard.GetState().IsKeyDown(Keys.W) && Lane < 3)
+            _position.X += _speed;
+            SetLane();
+            Origin = new Vector2(_texture.Width/2, _texture.Height/2);
+
+
+            
+
+            if(Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && WReleased)
             {
+                WReleased = false;
+                Lane--;
+            }
+            if (Keyboard.GetState().IsKeyUp(Keys.W))
+            {
+                WReleased = true;
+            }
+            if(Keyboard.GetState().IsKeyDown(Keys.S) && Lane < 3 && SReleased)
+            {
+                SReleased = false;
                 Lane++;
             }
-            if(Keyboard.GetState().IsKeyDown(Keys.S) && Lane > 0)
+            if(Keyboard.GetState().IsKeyUp(Keys.S))
             {
-                Lane--;
+                SReleased = true;
             }
             if(Keyboard.GetState().IsKeyDown(Keys.Space))
             {
@@ -60,8 +77,22 @@ namespace Prod_em_on_Team1
                 //increase temperature
             }
             //add a and d rotation in air
-            
+            if(Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                _angleOfRotation = -1;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                _angleOfRotation = 1;
+            }
+            else
+            {
+                _angleOfRotation = 0;
+            }
 
+
+            _box.X = (int)_position.X;
+            _box.Y = (int)_position.Y;
         }
 
         public int Temperature 

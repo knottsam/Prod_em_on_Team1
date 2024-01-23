@@ -7,11 +7,12 @@ namespace Prod_em_on_Team1
     internal class Sprite
     {
         protected Texture2D _texture;
-        protected float rotation;
-        private Vector2 _position;
-        private Rectangle _box;
-        private int _lane = 0;
-        private int _speed = 0;
+        protected Vector2 _position;
+        protected Rectangle _box;
+        protected int _lane = 0;
+        protected int _speed = 0;
+        protected float _angleOfRotation = 0;
+        protected int _scale = 1;
         
         
         public Sprite()
@@ -24,7 +25,6 @@ namespace Prod_em_on_Team1
             _lane = inLane;
             _speed = inSpeed;
 
-            Origin = new Vector2(0, 0);
         }
 
         public virtual void LoadContent(ContentManager myContent)
@@ -36,12 +36,35 @@ namespace Prod_em_on_Team1
             _position.X += _speed;
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
+            SetLane();
+            
         }
 
+        public void SetLane()
+        {
+            switch (_lane)
+            {
+                case 0:
+                    _position.Y = 500;
+                    break;
+
+                case 1:
+                    _position.Y = 550;
+                    break;
+
+                case 2:
+                    _position.Y = 600;
+                    break;
+
+                case 3:
+                    _position.Y = 650;
+                    break;
+            }
+        }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             //spriteBatch.Draw(_texture, _position, Color.White);
-            spriteBatch.Draw(_texture, _position, null, Color.White, rotation, Origin, 10, SpriteEffects.None, 0);
+            spriteBatch.Draw(_texture, _position, null, Color.White, _angleOfRotation, Origin, _scale, SpriteEffects.None, 0);
         }
 
         public Vector2 Position

@@ -10,8 +10,10 @@ namespace Prod_em_on_Team1
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Timer _timer;
-        private double _time;
         private Player _player;
+        private Camera _camera;
+        public static int ScreenHeight;
+        public static int ScreenWidth;
 
         public Game1()
         {
@@ -24,8 +26,11 @@ namespace Prod_em_on_Team1
 
         protected override void Initialize()
         {
+            ScreenHeight = _graphics.PreferredBackBufferHeight;
+            ScreenWidth = _graphics.PreferredBackBufferWidth;
 
             _timer = new Timer();
+            _camera = new Camera();
             _player = new Player(new Vector2(200,200), new Rectangle(500,500,32,32), 0, 0);
 
             base.Initialize();
@@ -44,7 +49,7 @@ namespace Prod_em_on_Team1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-
+            _camera.Follow(_player);
             _timer.Update(gameTime);
             _player.Update();
 
