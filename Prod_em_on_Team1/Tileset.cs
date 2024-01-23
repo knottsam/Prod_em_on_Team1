@@ -19,7 +19,7 @@ public class Tile
         _texture = texture;
         _position = position;
         _origin = new Vector2(_texture.Width / 2, _texture.Height / 2);
-        this.hasTexture = false; 
+        this.hasTexture = false;
         
     }
 
