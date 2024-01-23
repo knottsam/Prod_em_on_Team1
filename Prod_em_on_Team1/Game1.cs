@@ -12,6 +12,7 @@ namespace Prod_em_on_Team1
         private SpriteBatch _spriteBatch;
         private TrackMap map1;
 
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -23,8 +24,8 @@ namespace Prod_em_on_Team1
             // TODO: Add your initialization logic here
             map1 = new TrackMap(Content);
             base.Initialize();
-            _graphics.PreferredBackBufferWidth = 32;
-            _graphics.PreferredBackBufferHeight = 32;
+            _graphics.PreferredBackBufferWidth = 320;
+            _graphics.PreferredBackBufferHeight = 320;
         }
 
         protected override void LoadContent()
