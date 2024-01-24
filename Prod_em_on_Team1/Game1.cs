@@ -60,7 +60,9 @@ namespace Prod_em_on_Team1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(transformMatrix: _camera.Transform);
+            //_spriteBatch.Begin();
+
 
             _player.Draw(gameTime, _spriteBatch);
 

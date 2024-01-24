@@ -8,13 +8,14 @@ namespace Prod_em_on_Team1
         {
             Matrix Position = Matrix.CreateTranslation(
                 -target.Position.X - (target.Box.Width / 2),
-                -target.Position.Y - (target.Box.Width / 2), //change this so the height doesn't change
+                0, 
                 0);
 
             Matrix offset = Matrix.CreateTranslation(
-                Game1.ScreenWidth / 2,
-                Game1.ScreenHeight / 2,
+                300,
+                0,
                 0);
+
 
             Transform = Position * offset;
         }

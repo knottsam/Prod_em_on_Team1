@@ -39,6 +39,7 @@ namespace Prod_em_on_Team1
             //_textureTurningLeft = myContent.Load<Texture2D>("");//ADD TEXTURES
             //_textureVibrate = myContent.Load<Texture2D>("");//ADD TEXTURES
 
+            Origin = new Vector2(_textureForward.Width / 2, _textureForward.Height / 2);
         }
 
         public override void Update()
@@ -47,7 +48,7 @@ namespace Prod_em_on_Team1
 
             _position.X += _speed;
             SetLane();
-            Origin = new Vector2(_texture.Width/2, _texture.Height/2);
+            
 
 
             
@@ -66,6 +67,7 @@ namespace Prod_em_on_Team1
                 SReleased = false;
                 Lane++;
             }
+
             if(Keyboard.GetState().IsKeyUp(Keys.S))
             {
                 SReleased = true;
@@ -76,6 +78,7 @@ namespace Prod_em_on_Team1
                 //increase speed
                 //increase temperature
             }
+
             //add a and d rotation in air
             if(Keyboard.GetState().IsKeyDown(Keys.A))
             {

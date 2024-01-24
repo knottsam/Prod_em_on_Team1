@@ -12,7 +12,7 @@ namespace Prod_em_on_Team1
         protected int _lane = 0;
         protected int _speed = 0;
         protected float _angleOfRotation = 0;
-        protected int _scale = 1;
+        protected int _scale = 3;
         
         
         public Sprite()
