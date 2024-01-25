@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/../../../../../Pictures/ExciteBike/R1.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/../../../../../Pictures/ExciteBike/R2.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/../../../../../Pictures/ExciteBike/R3.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/../../../../../Pictures/ExciteBike/R4.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/../../../../../Pictures/ExciteBike/R5.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/BikeForward.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/pothole1.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/R1.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/R2.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/R3.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/R4.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/R5.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/R6.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/R7.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/R8.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/track1.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/track2.png</File>
+    <File>C:/Users/12SeminaraJ/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/track3.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File>R1.png</File>
+    <File>R2.png</File>
+    <File>R3.png</File>
+    <File>R4.png</File>
+    <File>R5.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
