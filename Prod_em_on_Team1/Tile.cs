@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Prod_em_on_Team1
 {
@@ -13,15 +11,29 @@ namespace Prod_em_on_Team1
         private Texture2D _texture;
         private Vector2 _origin;
         private Vector2 _position;
+        private Rectangle _box;
+        private string _tileType;
         private bool hasTexture;
 
-        public Tile(Texture2D texture, Vector2 position)
+        public Tile(Texture2D texture, Vector2 position, string tileType)
         {
             _texture = texture;
             _position = position;
+            _tileType = tileType;
             _origin = new Vector2(_texture.Width / 2, _texture.Height / 2);
+            _box = new Rectangle((int)_position.X, (int)_position.Y, _texture.Width, _texture.Height);
             this.hasTexture = false;
+        }
 
+        public void Update()
+        {
+            if(_tileType == "pothole")
+            {
+                if(_box.Intersects())//add collisions with player to increases temp / reduce speed
+                {
+
+                }
+            }
         }
 
 
@@ -32,6 +44,8 @@ namespace Prod_em_on_Team1
         public Texture2D Texture { get { return _texture; } set { _texture = value; } }
 
         public bool HasTexture { get { return hasTexture; } set { hasTexture = value; } }
+
+        public Rectangle Box { get { return _box; } set { _box = value; } }
 
         public void Draw(SpriteBatch _spriteBatch)
         {

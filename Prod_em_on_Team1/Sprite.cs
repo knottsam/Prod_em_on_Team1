@@ -10,7 +10,7 @@ namespace Prod_em_on_Team1
         protected Vector2 _position;
         protected Rectangle _box;
         protected int _lane = 0;
-        protected int _speed = 0;
+        protected Vector2 _speed = new Vector2(0,0);
         protected float _angleOfRotation = 0;
         protected int _scale = 1;
         
@@ -18,7 +18,7 @@ namespace Prod_em_on_Team1
         public Sprite()
         { }
         
-        public Sprite(Vector2 inPosition, Rectangle inBox, int inLane, int inSpeed)
+        public Sprite(Vector2 inPosition, Rectangle inBox, int inLane, Vector2 inSpeed)
         {
             _position = inPosition;
             _box = inBox;
@@ -33,7 +33,7 @@ namespace Prod_em_on_Team1
         }
         public virtual void Update()
         {
-            _position.X += _speed;
+            _position += _speed;
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
             _position.Y = 468 + (32 * _lane);
@@ -74,7 +74,7 @@ namespace Prod_em_on_Team1
             set { _lane = value; }
         }
 
-        public int Speed
+        public Vector2 Speed
         {
             get { return _speed;}
             set { _speed = value; }

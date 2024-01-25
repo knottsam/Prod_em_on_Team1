@@ -15,6 +15,7 @@ namespace Prod_em_on_Team1
         private TrackMap map1;
         public static int ScreenHeight;
         public static int ScreenWidth;
+        public static int MaxSpeed;
 
         public Game1()
         {
@@ -29,11 +30,13 @@ namespace Prod_em_on_Team1
         {
             ScreenHeight = _graphics.PreferredBackBufferHeight;
             ScreenWidth = _graphics.PreferredBackBufferWidth;
+            MaxSpeed = 10;
 
             map1 = new TrackMap(Content);
             _timer = new Timer();
             _camera = new Camera();
-            _player = new Player(new Vector2(468,200), new Rectangle(468,200,32,32), 0, 0);
+            _player = new Player(new Vector2(468,200), new Rectangle(468,200,32,32), 0, new Vector2(0, 0));
+
 
             base.Initialize();
         }
