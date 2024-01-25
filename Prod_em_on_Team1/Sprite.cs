@@ -36,31 +36,11 @@ namespace Prod_em_on_Team1
             _position.X += _speed;
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
-            SetLane();
-            
+            _position.Y = 468 + (32 * _lane);
+
         }
 
-        public void SetLane()
-        {
-            switch (_lane)
-            {
-                case 0:
-                    _position.Y = 500;
-                    break;
 
-                case 1:
-                    _position.Y = 550;
-                    break;
-
-                case 2:
-                    _position.Y = 600;
-                    break;
-
-                case 3:
-                    _position.Y = 650;
-                    break;
-            }
-        }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             //spriteBatch.Draw(_texture, _position, Color.White);

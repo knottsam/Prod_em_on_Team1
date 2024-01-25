@@ -47,13 +47,13 @@ namespace Prod_em_on_Team1
             _texture = _textureForward;
 
             _position.X += _speed;
-            SetLane();
-            
+            _position.Y = 468 + (32 * _lane);
 
 
-            
 
-            if(Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && WReleased)
+
+
+            if (Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && WReleased)
             {
                 WReleased = false;
                 Lane--;
@@ -62,7 +62,7 @@ namespace Prod_em_on_Team1
             {
                 WReleased = true;
             }
-            if(Keyboard.GetState().IsKeyDown(Keys.S) && Lane < 3 && SReleased)
+            if(Keyboard.GetState().IsKeyDown(Keys.S) && Lane < 5 && SReleased)
             {
                 SReleased = false;
                 Lane++;
