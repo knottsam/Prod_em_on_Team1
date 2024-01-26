@@ -11,13 +11,13 @@ namespace Prod_em_on_Team1
         private Texture2D _textureTurningRight;
         private Texture2D _textureTurningLeft;
         private Texture2D _textureVibrate;
-        private int _temperature;
+        private float _temperature;
         private int _groundPosition;
-        private bool WReleased = true, SReleased = true;
+        private bool _wReleased = true, _sReleased = true, _engineFailed;
         
 
 
-        public Player() : base()
+        public Player() : base() // fix temperature not increasing
         { }
 
         public Player(Vector2 inPosition, Rectangle inBox, int inLane, Vector2 inSpeed)
@@ -49,6 +49,12 @@ namespace Prod_em_on_Team1
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
 
+
+            if(_position.X > 5000)//delete
+            {
+
+            }
+
             Physics();
             Controls();
             
@@ -56,7 +62,14 @@ namespace Prod_em_on_Team1
 
         private void Physics()
         {
-            _speed.Y += 0.2f;//gravity
+            if(_position.Y < _groundPosition)//gravity
+            {
+                _speed.Y += 0.2f;
+            }
+            else
+            {
+                _speed.Y = 0;
+            }
             if (_position.Y + _speed.Y > _groundPosition)
             {
                 _position.Y = _groundPosition;
@@ -65,6 +78,7 @@ namespace Prod_em_on_Team1
             {
                 _position.Y += _speed.Y;
             }
+
 
             if (_speed.X > 0 && _position.Y == _groundPosition)//friction
             {
@@ -75,29 +89,45 @@ namespace Prod_em_on_Team1
                 _speed.X = 0;
             }
             _position.X += _speed.X;
+
+
+
+            if(_temperature > 0)//checking temperature. If it reaches 100, acceleration stops until temp goes back to 0
+            {
+                _temperature -= 0.4f;
+            }
+            if(_temperature >= 100)
+            {
+                _engineFailed = true;
+            }
+            else if(_temperature <= 0)
+            {
+                _engineFailed = false;
+            }
+            
         }
         private void Controls()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && WReleased)
+            if (Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && _wReleased)
             {
-                WReleased = false;
+                _wReleased = false;
                 Lane--;
             }
             if (Keyboard.GetState().IsKeyUp(Keys.W))
             {
-                WReleased = true;
+                _wReleased = true;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.S) && Lane < 5 && SReleased)
+            if (Keyboard.GetState().IsKeyDown(Keys.S) && Lane < 5 && _sReleased)
             {
-                SReleased = false;
+                _sReleased = false;
                 Lane++;
             }
 
             if (Keyboard.GetState().IsKeyUp(Keys.S))
             {
-                SReleased = true;
+                _sReleased = true;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && _speed.X < Game1.MaxSpeed && _position.Y == _groundPosition) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && _speed.X < Game1.MaxSpeed && _position.Y == _groundPosition && !_engineFailed) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
             {
                 if (_angleOfRotation < 0)//wheelies are cool and therefore fast
                 {
@@ -105,10 +135,11 @@ namespace Prod_em_on_Team1
                 }
                 else if (_angleOfRotation == 0)
                 {
-                    _speed.X += 0.15f;
+                    _speed.X += 0.1f;
                 }
 
                 //increase temperature
+                _temperature += 1f;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
@@ -125,7 +156,7 @@ namespace Prod_em_on_Team1
             }
         }
 
-        public int Temperature 
+        public float Temperature 
         {
             get {  return _temperature; }
             set { _temperature = value; }

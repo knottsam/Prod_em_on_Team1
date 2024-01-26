@@ -25,7 +25,7 @@ namespace Prod_em_on_Team1
             this.hasTexture = false;
         }
 
-        public void Update()
+        /*public void Update()
         {
             if(_tileType == "pothole")
             {
@@ -33,8 +33,8 @@ namespace Prod_em_on_Team1
                 {
 
                 }
-            }
-        }
+            }*/
+        //}
 
 
 

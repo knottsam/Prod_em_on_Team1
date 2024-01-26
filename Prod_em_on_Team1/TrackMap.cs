@@ -33,7 +33,7 @@ public class TrackMap
                 int k = myRand.Next(0, textures.Count);
                 int obst_chance = myRand.Next(0, 50);
 
-                _tiles[i, j] = new(textures[k], new(j * TileSize.X, 500 + i * TileSize.Y), "pothole");
+                _tiles[i, j] = new(textures[k], new(j * TileSize.X, 500 + i * TileSize.Y), "track");
 
                 if (obst_chance != 15 && _tiles[i, j].HasTexture == false) _tiles[i, j] = new(textures[k], new(j * TileSize.X, 500 + i * TileSize.Y), "pothole");
                 if (obst_chance == 15 && _tiles[i, j].HasTexture == false)
