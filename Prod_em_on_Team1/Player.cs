@@ -50,14 +50,9 @@ namespace Prod_em_on_Team1
             _box.Y = (int)_position.Y;
 
 
-            if(_position.X > 5000)//delete
-            {
-
-            }
-
             Physics();
             Controls();
-            
+            TemperatureChecks();
         }
 
         private void Physics()
@@ -92,19 +87,28 @@ namespace Prod_em_on_Team1
 
 
 
-            if(_temperature > 0)//checking temperature. If it reaches 100, acceleration stops until temp goes back to 0
+            
+        }
+
+        private void TemperatureChecks()
+        {
+            if (_temperature > 0)//checking temperature. If it reaches 100, acceleration stops until temp goes back to 0
             {
-                _temperature -= 0.4f;
+                _temperature -= 1.03f;
             }
-            if(_temperature >= 100)
+            if (_temperature < 0)
+            {
+                _temperature = 0;
+            }
+
+            if (_temperature >= 100)
             {
                 _engineFailed = true;
             }
-            else if(_temperature <= 0)
+            else if (_temperature <= 0)
             {
                 _engineFailed = false;
             }
-            
         }
         private void Controls()
         {
@@ -127,19 +131,26 @@ namespace Prod_em_on_Team1
             {
                 _sReleased = true;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && _speed.X < Game1.MaxSpeed && _position.Y == _groundPosition && !_engineFailed) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && _position.Y == _groundPosition && !_engineFailed) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
             {
-                if (_angleOfRotation < 0)//wheelies are cool and therefore fast
-                {
-                    _speed.X += 0.3f;
-                }
-                else if (_angleOfRotation == 0)
-                {
-                    _speed.X += 0.1f;
-                }
-
                 //increase temperature
-                _temperature += 1f;
+                _temperature += 1.2f;
+
+                if(_speed.X < Game1.MaxSpeed)
+                {
+                    if (_angleOfRotation < 0)//wheelies are cool and therefore fast
+                    {
+                        _speed.X += 0.3f;
+                    }
+                    else if (_angleOfRotation == 0)
+                    {
+                        _speed.X += 0.1f;
+                    }
+                }
+                
+
+                
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
