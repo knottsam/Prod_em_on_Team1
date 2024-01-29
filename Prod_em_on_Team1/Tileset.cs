@@ -19,12 +19,11 @@ public class Tile
         _texture = texture;
         _position = position;
         _origin = new Vector2(_texture.Width / 2, _texture.Height / 2);
-        this.hasTexture = false;
-        
+        this.hasTexture = false;    
     }
 
 
-
+        
     public Vector2 Position { get { return _position; }  set {_position = value; } }
     public Vector2 Origin { get { return _origin; }  set { _origin = value; } }
 

@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+
 
 
 namespace Prod_em_on_Team1
@@ -14,31 +10,61 @@ namespace Prod_em_on_Team1
     internal class Sprite
     {
         protected Texture2D _texture;
+        protected Vector2 _position;
+        protected Rectangle _box;
+        protected int _lane = 0;
+        protected Vector2 _speed = new Vector2(0, 0);
+        protected float _angleOfRotation = 0;
+        protected int _scale = 1;
+
+
         public Sprite()
         { }
-        public Sprite(Texture2D texture)
+
+        public Sprite(Vector2 inPosition, Rectangle inBox, int inLane, Vector2 inSpeed)
         {
-            _texture = texture;
+            _position = inPosition;
+            _box = inBox;
+            _lane = inLane;
+            _speed = inSpeed;
+
         }
 
+        public virtual void LoadContent(ContentManager myContent)
+        {
+
+        }
         public virtual void Update()
         {
+            _position += _speed;
+            _box.X = (int)_position.X;
+            _box.Y = (int)_position.Y;
+            _position.Y = 468 + (32 * _lane);
 
         }
+
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, Position, Color.White);
+            //spriteBatch.Draw(_texture, _position, Color.White);
+            spriteBatch.Draw(_texture, _position, null, Color.White, _angleOfRotation, Origin, _scale, SpriteEffects.None, 0);
         }
 
         public Vector2 Position
         {
+            get { return _position; }
+            set { _position = value; }
+        }
+
+        public Vector2 Origin
+        {
             get; set;
         }
 
-        public Rectangle Rectangle
+        public Rectangle Box
         {
-            get; set;
+            get { return _box; }
+            set { _box = value; }
         }
 
         public Texture2D Texture
@@ -47,7 +73,14 @@ namespace Prod_em_on_Team1
         }
         public int Lane
         {
-            get; set;
+            get { return _lane; }
+            set { _lane = value; }
+        }
+
+        public Vector2 Speed
+        {
+            get { return _speed; }
+            set { _speed = value; }
         }
     }
 }
