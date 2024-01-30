@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.Direct2D1;
 
 namespace Prod_em_on_Team1
 {
@@ -12,7 +13,7 @@ namespace Prod_em_on_Team1
         private Texture2D _textureTurningLeft;
         private Texture2D _textureVibrate;
         private float _temperature;
-        private int _groundPosition;
+        private int _groundPosition, _laneTransition;
         private bool _wReleased = true, _sReleased = true, _engineFailed;
         
 
@@ -51,21 +52,20 @@ namespace Prod_em_on_Team1
 
 
             Physics();
+            ChangingLane();
             Controls();
             TemperatureChecks();
         }
 
         private void Physics()
         {
-            if(_position.Y < _groundPosition)//gravity
+            if(_position.Y < _groundPosition && _laneTransition == 0)//gravity
             {
                 _speed.Y += 0.2f;
             }
-            else
-            {
-                _speed.Y = 0;
-            }
-            if (_position.Y + _speed.Y > _groundPosition)
+
+
+            if (_position.Y + _speed.Y > _groundPosition && _laneTransition == 0)
             {
                 _position.Y = _groundPosition;
             }
@@ -86,15 +86,48 @@ namespace Prod_em_on_Team1
             _position.X += _speed.X;
 
 
-
-            
+           
         }
 
+        private void ChangingLane()
+        {
+            if (_position.Y == _groundPosition)
+            {
+                _laneTransition = 0;
+                _speed.Y = 0;
+            }
+
+            if (_laneTransition == 1)
+            {
+                //change texture
+                if (_position.Y < _groundPosition)
+                {
+                    _speed.Y = 2;
+                }
+                else if (_position.Y > _groundPosition)
+                {
+                    _position.Y = _groundPosition;
+                }
+            }
+
+            else if (_laneTransition == -1)
+            {
+                //change texture
+                if (_position.Y > _groundPosition)
+                {
+                    _speed.Y = -2;
+                }
+                else if (_laneTransition == 1 && _position.Y < _groundPosition)
+                {
+                    _position.Y = _groundPosition;
+                }
+            }
+        }
         private void TemperatureChecks()
         {
             if (_temperature > 0)//checking temperature. If it reaches 100, acceleration stops until temp goes back to 0
             {
-                _temperature -= 1.03f;
+                _temperature -= 0.2f;
             }
             if (_temperature < 0)
             {
@@ -110,12 +143,14 @@ namespace Prod_em_on_Team1
                 _engineFailed = false;
             }
         }
+
         private void Controls()
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && _wReleased)
             {
                 _wReleased = false;
                 Lane--;
+                _laneTransition = -1;
             }
             if (Keyboard.GetState().IsKeyUp(Keys.W))
             {
@@ -125,6 +160,7 @@ namespace Prod_em_on_Team1
             {
                 _sReleased = false;
                 Lane++;
+                _laneTransition = 1;
             }
 
             if (Keyboard.GetState().IsKeyUp(Keys.S))
@@ -134,10 +170,9 @@ namespace Prod_em_on_Team1
             
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && _position.Y == _groundPosition && !_engineFailed) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
             {
-                //increase temperature
-                _temperature += 1.2f;
+                _temperature += 0.37f;
 
-                if(_speed.X < Game1.MaxSpeed)
+                if (_speed.X < Game1.MaxSpeed)
                 {
                     if (_angleOfRotation < 0)//wheelies are cool and therefore fast
                     {
