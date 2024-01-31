@@ -31,7 +31,7 @@ namespace Prod_em_on_Team1
         {
 
         }
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
             _position += _speed;
             _box.X = (int)_position.X;

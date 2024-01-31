@@ -56,7 +56,7 @@ namespace Prod_em_on_Team1
 
             _camera.Follow(_player);
             _timer.Update(gameTime);
-            _player.Update();
+            _player.Update(gameTime);
 
 
             base.Update(gameTime);

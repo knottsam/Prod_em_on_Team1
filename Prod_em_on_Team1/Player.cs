@@ -8,6 +8,7 @@ namespace Prod_em_on_Team1
 {
     internal class Player : Sprite
     {
+        private GameTime _gameTime;
         private Texture2D _textureForward;
         private Texture2D _textureTurningRight;
         private Texture2D _textureTurningLeft;
@@ -19,7 +20,7 @@ namespace Prod_em_on_Team1
 
 
         public Player() : base() // fix temperature not increasing
-        { }
+        {}
 
         public Player(Vector2 inPosition, Rectangle inBox, int inLane, Vector2 inSpeed)
             : base(inPosition, inBox, inLane, inSpeed)
@@ -28,24 +29,25 @@ namespace Prod_em_on_Team1
             _box = inBox;
             _lane = inLane;
             _speed = inSpeed;
-
+            
         }
 
         public override void LoadContent(ContentManager myContent)
         {
             myContent.RootDirectory = "Content";
-            // add textures
+
             _textureForward = myContent.Load<Texture2D>("BikeForward");
-            //_textureTurningRight = myContent.Load<Texture2D>("");//ADD TEXTURES
-            //_textureTurningLeft = myContent.Load<Texture2D>("");//ADD TEXTURES
+            _textureTurningRight = myContent.Load<Texture2D>("bikeTurnRight");//ADD TEXTURES
+            _textureTurningLeft = myContent.Load<Texture2D>("bikeTurnLeft");//ADD TEXTURES
             //_textureVibrate = myContent.Load<Texture2D>("");//ADD TEXTURES
 
             Origin = new Vector2(_textureForward.Width / 2, _textureForward.Height / 2);
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
-            _texture = _textureForward;
+            _gameTime = gameTime;
+            //_texture = _textureForward;
             _groundPosition = 468 + (32 * _lane);
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
@@ -55,6 +57,23 @@ namespace Prod_em_on_Team1
             ChangingLane();
             Controls();
             TemperatureChecks();
+            Vibration();
+        }
+
+        private void Vibration()
+        {
+            if(_position.Y == _groundPosition && _angleOfRotation == 0)
+            {
+                if (_gameTime.TotalGameTime.TotalMilliseconds % 200 == 0 && _laneTransition != 0)
+                {
+                    _texture = _textureForward;
+                }
+                else if (_gameTime.TotalGameTime.TotalMilliseconds % 100 == 0)
+                {
+                    //_texture = _textureVibrate
+                }
+            }
+            else { _texture = _textureForward;}
         }
 
         private void Physics()
@@ -75,7 +94,7 @@ namespace Prod_em_on_Team1
             }
 
 
-            if (_speed.X > 0 && _position.Y == _groundPosition)//friction
+            if (_speed.X > 0)//friction / air resistance
             {
                 _speed.X -= 0.02f;
             }
@@ -97,12 +116,14 @@ namespace Prod_em_on_Team1
                 _speed.Y = 0;
             }
 
+
             if (_laneTransition == 1)
             {
                 //change texture
                 if (_position.Y < _groundPosition)
                 {
-                    _speed.Y = 2;
+                    _speed.Y = 3;
+                    _texture = _textureTurningRight;
                 }
                 else if (_position.Y > _groundPosition)
                 {
@@ -115,9 +136,10 @@ namespace Prod_em_on_Team1
                 //change texture
                 if (_position.Y > _groundPosition)
                 {
-                    _speed.Y = -2;
+                    _texture = _textureTurningLeft;
+                    _speed.Y = -3;
                 }
-                else if (_laneTransition == 1 && _position.Y < _groundPosition)
+                else if (_position.Y < _groundPosition)
                 {
                     _position.Y = _groundPosition;
                 }
@@ -146,60 +168,63 @@ namespace Prod_em_on_Team1
 
         private void Controls()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && _wReleased)
+            if(!_engineFailed)
             {
-                _wReleased = false;
-                Lane--;
-                _laneTransition = -1;
-            }
-            if (Keyboard.GetState().IsKeyUp(Keys.W))
-            {
-                _wReleased = true;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.S) && Lane < 5 && _sReleased)
-            {
-                _sReleased = false;
-                Lane++;
-                _laneTransition = 1;
-            }
-
-            if (Keyboard.GetState().IsKeyUp(Keys.S))
-            {
-                _sReleased = true;
-            }
-            
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && _position.Y == _groundPosition && !_engineFailed) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
-            {
-                _temperature += 0.37f;
-
-                if (_speed.X < Game1.MaxSpeed)
+                if (Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && _wReleased)//changing lanes
                 {
-                    if (_angleOfRotation < 0)//wheelies are cool and therefore fast
+                    _wReleased = false;
+                    Lane--;
+                    _laneTransition = -1;
+                }
+                if (Keyboard.GetState().IsKeyUp(Keys.W))
+                {
+                    _wReleased = true;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.S) && Lane < 5 && _sReleased)
+                {
+                    _sReleased = false;
+                    Lane++;
+                    _laneTransition = 1;
+                }
+
+                if (Keyboard.GetState().IsKeyUp(Keys.S))
+                {
+                    _sReleased = true;
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Space) && _position.Y == _groundPosition) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
+                {
+                    _temperature += 0.37f;
+
+                    if (_speed.X < Game1.MaxSpeed)
                     {
-                        _speed.X += 0.3f;
-                    }
-                    else if (_angleOfRotation == 0)
-                    {
-                        _speed.X += 0.1f;
+                        if (_angleOfRotation < 0)//wheelies are cool and therefore fast
+                        {
+                            _speed.X += 0.3f;
+                        }
+                        else if (_angleOfRotation == 0)
+                        {
+                            _speed.X += 0.1f;
+                        }
                     }
                 }
-                
 
-                
+                if (Keyboard.GetState().IsKeyDown(Keys.A))//rotating / wheelies
+                {
+                    _angleOfRotation = -1;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                {
+                    _angleOfRotation = 1;
+                }
+                else
+                {
+                    _angleOfRotation = 0;
+                }
             }
+            
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                _angleOfRotation = -1;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                _angleOfRotation = 1;
-            }
-            else
-            {
-                _angleOfRotation = 0;
-            }
+            
         }
 
         public float Temperature 

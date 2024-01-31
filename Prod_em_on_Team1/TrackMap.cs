@@ -7,7 +7,7 @@ using Prod_em_on_Team1;
 
 public class TrackMap
 {
-    private Point _mapSize = new(5, 500);
+    private Point _mapSize = new(5, 1000);
     private Tile[,] _tiles;
     public Point TileSize { get; private set; }
     public Point mapSize { get; private set; }
@@ -56,7 +56,6 @@ public class TrackMap
                 }
             }
         }
-
     }
 
     public void Draw(SpriteBatch spriteBatch)
