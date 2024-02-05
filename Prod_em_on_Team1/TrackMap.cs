@@ -58,6 +58,11 @@ public class TrackMap
         }
     }
 
+    public void CreateFinish()
+    {
+
+    }
+
     public void Draw(SpriteBatch spriteBatch)
     {
         for (int y = 0; y < _mapSize.Y; y++)

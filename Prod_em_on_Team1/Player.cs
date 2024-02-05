@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.Direct2D1;
 
 namespace Prod_em_on_Team1
 {
@@ -14,8 +13,9 @@ namespace Prod_em_on_Team1
         private Texture2D _textureTurningLeft;
         private Texture2D _textureVibrate;
         private float _temperature;
-        private int _groundPosition, _laneTransition;
+        private int _groundPosition, _laneTransition, _maximumRotation = 1;
         private bool _wReleased = true, _sReleased = true, _engineFailed;
+        private long _updateCounter = 0;
         
 
 
@@ -47,7 +47,8 @@ namespace Prod_em_on_Team1
         public override void Update(GameTime gameTime)
         {
             _gameTime = gameTime;
-            //_texture = _textureForward;
+            _texture = _textureForward;
+
             _groundPosition = 468 + (32 * _lane);
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
@@ -57,23 +58,27 @@ namespace Prod_em_on_Team1
             ChangingLane();
             Controls();
             TemperatureChecks();
-            Vibration();
+            //Vibration();
         }
 
         private void Vibration()
         {
-            if(_position.Y == _groundPosition && _angleOfRotation == 0)
+            _updateCounter++;
+            if(_laneTransition == 0 && _position.Y == _groundPosition)
             {
-                if (_gameTime.TotalGameTime.TotalMilliseconds % 200 == 0 && _laneTransition != 0)
+                if(_updateCounter % 30 == 0 && _texture == _textureForward)
+                {
+                    _texture = _textureVibrate;
+                }
+                else if(_updateCounter % 30 == 0 && _texture == _textureVibrate)
                 {
                     _texture = _textureForward;
                 }
-                else if (_gameTime.TotalGameTime.TotalMilliseconds % 100 == 0)
-                {
-                    //_texture = _textureVibrate
-                }
             }
-            else { _texture = _textureForward;}
+            else if(_laneTransition == 0)
+            {
+                _texture = _textureForward;
+            }
         }
 
         private void Physics()
@@ -122,7 +127,7 @@ namespace Prod_em_on_Team1
                 //change texture
                 if (_position.Y < _groundPosition)
                 {
-                    _speed.Y = 3;
+                    _speed.Y = 2;
                     _texture = _textureTurningRight;
                 }
                 else if (_position.Y > _groundPosition)
@@ -137,7 +142,7 @@ namespace Prod_em_on_Team1
                 if (_position.Y > _groundPosition)
                 {
                     _texture = _textureTurningLeft;
-                    _speed.Y = -3;
+                    _speed.Y = -2;
                 }
                 else if (_position.Y < _groundPosition)
                 {
@@ -209,17 +214,25 @@ namespace Prod_em_on_Team1
                     }
                 }
 
-                if (Keyboard.GetState().IsKeyDown(Keys.A))//rotating / wheelies
+                if (Keyboard.GetState().IsKeyDown(Keys.A) && _angleOfRotation > -_maximumRotation)//rotating / wheelies
                 {
-                    _angleOfRotation = -1;
+                    _angleOfRotation -= 0.1f;
                 }
-                else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                else if (Keyboard.GetState().IsKeyDown(Keys.D) && _angleOfRotation < _maximumRotation)
                 {
-                    _angleOfRotation = 1;
+                    _angleOfRotation += 0.1f;
                 }
-                else
+                else if (Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyUp(Keys.A))
                 {
-                    _angleOfRotation = 0;
+                    if(_angleOfRotation < 0)
+                    {
+                        _angleOfRotation += 0.1f;
+                    }
+                    else if(_angleOfRotation > 0)
+                    {
+                        _angleOfRotation -= 0.1f;
+                    }
+                    
                 }
             }
             
