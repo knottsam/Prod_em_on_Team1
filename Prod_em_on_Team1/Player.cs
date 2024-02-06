@@ -12,6 +12,7 @@ namespace Prod_em_on_Team1
         private Texture2D _textureTurningRight;
         private Texture2D _textureTurningLeft;
         private Texture2D _textureVibrate;
+        private Shadow _playerShadow;
         private float _temperature;
         private int _groundPosition, _laneTransition, _maximumRotation = 1;
         private bool _wReleased = true, _sReleased = true, _engineFailed;
@@ -29,7 +30,7 @@ namespace Prod_em_on_Team1
             _box = inBox;
             _lane = inLane;
             _speed = inSpeed;
-            
+            _playerShadow = new Shadow(this);
         }
 
         public override void LoadContent(ContentManager myContent)
@@ -197,7 +198,7 @@ namespace Prod_em_on_Team1
                     _sReleased = true;
                 }
 
-                if (Keyboard.GetState().IsKeyDown(Keys.Space) && _position.Y == _groundPosition) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
+                if (Keyboard.GetState().IsKeyDown(Keys.Space) && (_position.Y == _groundPosition || _laneTransition != 0)) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
                 {
                     _temperature += 0.37f;
 
@@ -244,6 +245,20 @@ namespace Prod_em_on_Team1
         {
             get {  return _temperature; }
             set { _temperature = value; }
+        }
+        public int GroundPosition
+        {
+            get { return _groundPosition; }
+            set { _groundPosition = value; }
+        }
+        public int LaneTransition
+        {
+            get { return _laneTransition; }
+            set { _laneTransition = value; }
+        }
+        public Shadow Shadow
+        {
+            get { return _playerShadow; }
         }
     }
 }

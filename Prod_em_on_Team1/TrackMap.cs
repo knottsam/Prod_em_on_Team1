@@ -58,10 +58,10 @@ public class TrackMap
         }
     }
 
-    public void CreateFinish()
+    /*public void CreateFinish()
     {
 
-    }
+    }*/
 
     public void Draw(SpriteBatch spriteBatch)
     {

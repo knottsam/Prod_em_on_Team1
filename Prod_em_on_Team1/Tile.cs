@@ -25,16 +25,6 @@ namespace Prod_em_on_Team1
             this.hasTexture = false;
         }
 
-        /*public void Update()
-        {
-            if(_tileType == "pothole")
-            {
-                if(_box.Intersects())//add collisions with player to increases temp / reduce speed
-                {
-
-                }
-            }*/
-        //}
 
 
 
