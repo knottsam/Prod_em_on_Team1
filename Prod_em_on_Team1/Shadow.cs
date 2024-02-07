@@ -12,6 +12,7 @@ namespace Prod_em_on_Team1
         public Shadow(Player inPlayer)
         {
             _player = inPlayer;
+            _scale = 1;
         }
 
         public override void Update(GameTime gameTime)
@@ -25,7 +26,7 @@ namespace Prod_em_on_Team1
         {
             myContent.RootDirectory = "Content";
 
-            _texture = myContent.Load<Texture2D>("");//add texture
+            _texture = myContent.Load<Texture2D>("Excitebike_Shadow");//add texture
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -33,6 +34,7 @@ namespace Prod_em_on_Team1
             {
                 spriteBatch.Draw(_texture, _position, null, Color.White, _angleOfRotation, Origin, _scale, SpriteEffects.None, 0);
             }
+            spriteBatch.Draw(_texture, _position, null, Color.White, _angleOfRotation, Origin, _scale, SpriteEffects.None, 0);
         }
     }
 }

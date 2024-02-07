@@ -31,6 +31,7 @@ namespace Prod_em_on_Team1
             _lane = inLane;
             _speed = inSpeed;
             _playerShadow = new Shadow(this);
+            
         }
 
         public override void LoadContent(ContentManager myContent)
@@ -41,6 +42,8 @@ namespace Prod_em_on_Team1
             _textureTurningRight = myContent.Load<Texture2D>("bikeTurnRight");//ADD TEXTURES
             _textureTurningLeft = myContent.Load<Texture2D>("bikeTurnLeft");//ADD TEXTURES
             //_textureVibrate = myContent.Load<Texture2D>("");//ADD TEXTURES
+
+            _playerShadow.LoadContent(myContent);
 
             Origin = new Vector2(_textureForward.Width / 2, _textureForward.Height / 2);
         }
@@ -60,6 +63,14 @@ namespace Prod_em_on_Team1
             Controls();
             TemperatureChecks();
             //Vibration();
+            _playerShadow.Update(gameTime);
+        }
+
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(_texture, _position, null, Color.White, _angleOfRotation, Origin, _scale, SpriteEffects.None, 0);
+            _playerShadow.Draw(gameTime, spriteBatch);
         }
 
         private void Vibration()
@@ -233,7 +244,11 @@ namespace Prod_em_on_Team1
                     {
                         _angleOfRotation -= 0.1f;
                     }
-                    
+                    if ((_angleOfRotation < 0.1 && _angleOfRotation > 0) || (_angleOfRotation > -0.1 && _angleOfRotation < 0))
+                    {
+                        _angleOfRotation = 0;
+                    }
+
                 }
             }
             

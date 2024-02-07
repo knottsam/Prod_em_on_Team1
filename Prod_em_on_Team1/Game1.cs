@@ -72,6 +72,7 @@ namespace Prod_em_on_Team1
             _player.Draw(gameTime, _spriteBatch);
 
 
+
             _spriteBatch.End();
             base.Draw(gameTime);
         }
