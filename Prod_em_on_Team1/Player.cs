@@ -39,8 +39,8 @@ namespace Prod_em_on_Team1
             myContent.RootDirectory = "Content";
 
             _textureForward = myContent.Load<Texture2D>("BikeForward");
-            _textureTurningRight = myContent.Load<Texture2D>("bikeTurnRight");//ADD TEXTURES
-            _textureTurningLeft = myContent.Load<Texture2D>("bikeTurnLeft");//ADD TEXTURES
+            _textureTurningRight = myContent.Load<Texture2D>("bikeTurnRight");
+            _textureTurningLeft = myContent.Load<Texture2D>("bikeTurnLeft");
             //_textureVibrate = myContent.Load<Texture2D>("");//ADD TEXTURES
 
             _playerShadow.LoadContent(myContent);
@@ -187,73 +187,76 @@ namespace Prod_em_on_Team1
         {
             if(!_engineFailed)
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && _wReleased)//changing lanes
+                if(_position.Y == _groundPosition || _laneTransition != 0)
                 {
-                    _wReleased = false;
-                    Lane--;
-                    _laneTransition = -1;
-                }
-                if (Keyboard.GetState().IsKeyUp(Keys.W))
-                {
-                    _wReleased = true;
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.S) && Lane < 5 && _sReleased)
-                {
-                    _sReleased = false;
-                    Lane++;
-                    _laneTransition = 1;
-                }
-
-                if (Keyboard.GetState().IsKeyUp(Keys.S))
-                {
-                    _sReleased = true;
-                }
-
-                if (Keyboard.GetState().IsKeyDown(Keys.Space) && (_position.Y == _groundPosition || _laneTransition != 0)) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
-                {
-                    _temperature += 0.37f;
-
-                    if (_speed.X < Game1.MaxSpeed)
+                    if (Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && _wReleased)//changing lanes
                     {
-                        if (_angleOfRotation < 0)//wheelies are cool and therefore fast
+                        _wReleased = false;
+                        Lane--;
+                        _laneTransition = -1;
+                    }
+                    if (Keyboard.GetState().IsKeyUp(Keys.W))
+                    {
+                        _wReleased = true;
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.S) && Lane < 5 && _sReleased)
+                    {
+                        _sReleased = false;
+                        Lane++;
+                        _laneTransition = 1;
+                    }
+
+                    if (Keyboard.GetState().IsKeyUp(Keys.S))
+                    {
+                        _sReleased = true;
+                    }
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space) && (_position.Y == _groundPosition || _laneTransition != 0)) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
+                    {
+                        _temperature += 0.37f;
+
+                        if (_speed.X < Game1.MaxSpeed)
                         {
-                            _speed.X += 0.3f;
-                        }
-                        else if (_angleOfRotation == 0)
-                        {
-                            _speed.X += 0.1f;
+                            if (_angleOfRotation < 0)//wheelies are cool and therefore fast
+                            {
+                                _speed.X += 0.3f;
+                            }
+                            else if (_angleOfRotation == 0)
+                            {
+                                _speed.X += 0.1f;
+                            }
                         }
                     }
                 }
 
-                if (Keyboard.GetState().IsKeyDown(Keys.A) && _angleOfRotation > -_maximumRotation)//rotating / wheelies
-                {
-                    _angleOfRotation -= 0.1f;
-                }
-                else if (Keyboard.GetState().IsKeyDown(Keys.D) && _angleOfRotation < _maximumRotation)
+                
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.A) && _angleOfRotation > -_maximumRotation && !_engineFailed)//rotating and wheelies
+            {
+                _angleOfRotation -= 0.1f;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D) && _angleOfRotation < _maximumRotation && !_engineFailed)
+            {
+                _angleOfRotation += 0.1f;
+            }
+            else if ((Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyUp(Keys.A)) || _engineFailed)
+            {
+                if (_angleOfRotation < 0)
                 {
                     _angleOfRotation += 0.1f;
                 }
-                else if (Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyUp(Keys.A))
+                else if (_angleOfRotation > 0)
                 {
-                    if(_angleOfRotation < 0)
-                    {
-                        _angleOfRotation += 0.1f;
-                    }
-                    else if(_angleOfRotation > 0)
-                    {
-                        _angleOfRotation -= 0.1f;
-                    }
-                    if ((_angleOfRotation < 0.1 && _angleOfRotation > 0) || (_angleOfRotation > -0.1 && _angleOfRotation < 0))
-                    {
-                        _angleOfRotation = 0;
-                    }
-
+                    _angleOfRotation -= 0.1f;
                 }
-            }
-            
+                if ((_angleOfRotation < 0.1 && _angleOfRotation > 0) || (_angleOfRotation > -0.1 && _angleOfRotation < 0))
+                {
+                    _angleOfRotation = 0;
+                }
 
-            
+            }
+
         }
 
         public float Temperature 
