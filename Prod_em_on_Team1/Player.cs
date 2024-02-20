@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Prod_em_on_Team1
 {
@@ -15,7 +16,7 @@ namespace Prod_em_on_Team1
         private Shadow _playerShadow;
         private float _temperature;
         private int _groundPosition, _laneTransition, _maximumRotation = 1;
-        private bool _wReleased = true, _sReleased = true, _engineFailed;
+        private bool _wReleased = true, _sReleased = true, _engineFailed, isFalling;
         private long _updateCounter = 0;
         
 
@@ -31,7 +32,6 @@ namespace Prod_em_on_Team1
             _lane = inLane;
             _speed = inSpeed;
             _playerShadow = new Shadow(this);
-            
         }
 
         public override void LoadContent(ContentManager myContent)
@@ -49,7 +49,7 @@ namespace Prod_em_on_Team1
         }
 
         public override void Update(GameTime gameTime)
-        {
+        {            
             _gameTime = gameTime;
             _texture = _textureForward;
 
@@ -76,7 +76,7 @@ namespace Prod_em_on_Team1
         private void Vibration()
         {
             _updateCounter++;
-            if(_laneTransition == 0 && _position.Y == _groundPosition)
+            if(!isFalling)
             {
                 if(_updateCounter % 30 == 0 && _texture == _textureForward)
                 {
@@ -95,11 +95,10 @@ namespace Prod_em_on_Team1
 
         private void Physics()
         {
-            if(_position.Y < _groundPosition && _laneTransition == 0)//gravity
+            if(isFalling)//gravity
             {
                 _speed.Y += 0.2f;
             }
-
 
             if (_position.Y + _speed.Y > _groundPosition && _laneTransition == 0)
             {
@@ -122,7 +121,7 @@ namespace Prod_em_on_Team1
             _position.X += _speed.X;
 
 
-           
+            isFalling = _position.Y < _groundPosition && _laneTransition == 0;
         }
 
         private void ChangingLane()
@@ -185,51 +184,47 @@ namespace Prod_em_on_Team1
 
         private void Controls()
         {
-            if(!_engineFailed)
+            if(!_engineFailed && !isFalling)
             {
-                if(_position.Y == _groundPosition || _laneTransition != 0)
+
+                if (Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && _wReleased)//changing lanes
                 {
-                    if (Keyboard.GetState().IsKeyDown(Keys.W) && Lane > 0 && _wReleased)//changing lanes
-                    {
-                        _wReleased = false;
-                        Lane--;
-                        _laneTransition = -1;
-                    }
-                    if (Keyboard.GetState().IsKeyUp(Keys.W))
-                    {
-                        _wReleased = true;
-                    }
-                    if (Keyboard.GetState().IsKeyDown(Keys.S) && Lane < 5 && _sReleased)
-                    {
-                        _sReleased = false;
-                        Lane++;
-                        _laneTransition = 1;
-                    }
+                    _wReleased = false;
+                    Lane--;
+                    _laneTransition = -1;
+                }
+                if (Keyboard.GetState().IsKeyUp(Keys.W))
+                {
+                    _wReleased = true;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.S) && Lane < 5 && _sReleased)
+                {
+                    _sReleased = false;
+                    Lane++;
+                    _laneTransition = 1;
+                }
 
-                    if (Keyboard.GetState().IsKeyUp(Keys.S))
-                    {
-                        _sReleased = true;
-                    }
+                if (Keyboard.GetState().IsKeyUp(Keys.S))
+                {
+                    _sReleased = true;
+                }
 
-                    if (Keyboard.GetState().IsKeyDown(Keys.Space) && (_position.Y == _groundPosition || _laneTransition != 0)) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
-                    {
-                        _temperature += 0.37f;
+                if (Keyboard.GetState().IsKeyDown(Keys.Space) && !isFalling) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
+                {
+                    _temperature += 0.37f;
 
-                        if (_speed.X < Game1.MaxSpeed)
+                    if (_speed.X < Game1.MaxSpeed)
+                    {
+                        if (_angleOfRotation < 0)//wheelies are cool and therefore fast
                         {
-                            if (_angleOfRotation < 0)//wheelies are cool and therefore fast
-                            {
-                                _speed.X += 0.3f;
-                            }
-                            else if (_angleOfRotation == 0)
-                            {
-                                _speed.X += 0.1f;
-                            }
+                            _speed.X += 0.3f;
+                        }
+                        else if (_angleOfRotation == 0)
+                        {
+                            _speed.X += 0.1f;
                         }
                     }
                 }
-
-                
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A) && _angleOfRotation > -_maximumRotation && !_engineFailed)//rotating and wheelies
