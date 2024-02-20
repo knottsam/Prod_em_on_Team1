@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Text.Json;
 
 
 namespace Prod_em_on_Team1
@@ -10,8 +14,13 @@ namespace Prod_em_on_Team1
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Timer _timer;
+        private double _time;
+        private double _recordTime = 10;
         public static int ScreenHeight;
         public static int ScreenWidth;
+        private GameStats gStats;
+        private const string PATH = "gamestats.json";
+        private SpriteFont basicFont;
 
         public Game1()
         {
@@ -34,6 +43,18 @@ namespace Prod_em_on_Team1
 
         protected override void LoadContent()
         {
+            gStats = new GameStats()
+            {
+                RecordTime = _recordTime,
+                TestStatistic = "test",
+            };
+            Save(gStats);
+
+            gStats = Load();
+            Trace.WriteLine($"{gStats.TestStatistic} {gStats.RecordTime}");
+
+            basicFont = Content.Load<SpriteFont>("basicFont");
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         }
@@ -44,6 +65,27 @@ namespace Prod_em_on_Team1
                 Exit();
 
             _timer.Update(gameTime);
+            gStats.Update(gameTime);
+
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                _time = gameTime.TotalGameTime.TotalSeconds;
+
+                if (_time < _recordTime)
+                {
+                    _recordTime = _time;
+                }
+
+                Save(gStats);
+            }
+
+            gStats = new GameStats()
+            {
+                RecordTime = _recordTime,
+                TestStatistic = "test",
+            };
+            Save(gStats);
 
             base.Update(gameTime);
         }
@@ -54,9 +96,24 @@ namespace Prod_em_on_Team1
             
             _spriteBatch.Begin();
 
+            _spriteBatch.DrawString(basicFont, _time.ToString(), new Vector2(100, 200), Color.White);
+            _spriteBatch.DrawString(basicFont, _recordTime.ToString(), new Vector2(100, 250), Color.White);
 
             _spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        private void Save(GameStats stats)
+        {
+            string serialisedText = JsonSerializer.Serialize<GameStats>(stats);
+            Trace.WriteLine(serialisedText);
+            File.WriteAllText(PATH, serialisedText);
+        }
+
+        private GameStats Load()
+        {
+            var fileContents = File.ReadAllText(PATH);
+            return JsonSerializer.Deserialize<GameStats>(fileContents);
         }
     }
 }
