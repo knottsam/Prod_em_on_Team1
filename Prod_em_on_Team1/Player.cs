@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Prod_em_on_Team1
 {
-    internal class Player : Sprite
+    public class Player : Sprite
     {
         private Texture2D _textureForward;
         private Texture2D _textureTurningRight;
@@ -13,7 +13,7 @@ namespace Prod_em_on_Team1
         private Texture2D _textureVibrate;
         private int _temperature;
         private int _groundPosition;
-        private bool WReleased = true, SReleased = true;
+        private bool WReleased = true, SReleased = true, isTouchingPothole = false;
 
 
 
@@ -27,7 +27,6 @@ namespace Prod_em_on_Team1
             _box = inBox;
             _lane = inLane;
             _speed = inSpeed;
-
         }
 
         public override void LoadContent(ContentManager myContent)
@@ -48,10 +47,17 @@ namespace Prod_em_on_Team1
             _groundPosition = 468 + (32 * _lane);
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
+            _box.Width = (int)this.Texture.Width;
+            _box.Height = (int)this.Texture.Height;
 
             Physics();
             Controls();
+            
+        }
 
+        public void Collision()
+        {
+            _speed.X = 0;
         }
 
         private void Physics()

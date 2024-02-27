@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Prod_em_on_Team1
 {
-    internal class Sprite
+    public class Sprite
     {
         protected Texture2D _texture;
         protected Vector2 _position;
@@ -16,7 +16,7 @@ namespace Prod_em_on_Team1
         protected Vector2 _speed = new Vector2(0, 0);
         protected float _angleOfRotation = 0;
         protected int _scale = 1;
-
+        
 
         public Sprite()
         { }
@@ -39,6 +39,8 @@ namespace Prod_em_on_Team1
             _position += _speed;
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
+            _box.Width = (int)this.Texture.Width;
+            _box.Height = (int)this.Texture.Height;
             _position.Y = 468 + (32 * _lane);
 
         }
