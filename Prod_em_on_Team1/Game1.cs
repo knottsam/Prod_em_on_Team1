@@ -96,8 +96,8 @@ namespace Prod_em_on_Team1
             
             _spriteBatch.Begin();
 
-            _spriteBatch.DrawString(basicFont, _time.ToString(), new Vector2(100, 200), Color.White);
-            _spriteBatch.DrawString(basicFont, _recordTime.ToString(), new Vector2(100, 250), Color.White);
+            _spriteBatch.DrawString(basicFont, _time.ToString(), new Vector2(100, 500), Color.White);
+            _spriteBatch.DrawString(basicFont, _recordTime.ToString(), new Vector2(100, 550), Color.White);
 
             _spriteBatch.End();
             base.Draw(gameTime);
