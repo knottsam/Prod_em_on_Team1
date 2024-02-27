@@ -59,7 +59,7 @@ namespace Prod_em_on_Team1
 
             _camera.Follow(_player);
             _timer.Update(gameTime);
-            _player.Update();
+            _player.Update(gameTime);
             map1.Update(Content, _player);
             
 
