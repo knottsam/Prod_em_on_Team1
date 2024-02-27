@@ -41,28 +41,29 @@ namespace Prod_em_on_Team1
             _textureForward = myContent.Load<Texture2D>("BikeForward");
             _textureTurningRight = myContent.Load<Texture2D>("bikeTurnRight");
             _textureTurningLeft = myContent.Load<Texture2D>("bikeTurnLeft");
-            //_textureVibrate = myContent.Load<Texture2D>("");//ADD TEXTURES
+            _textureVibrate = myContent.Load<Texture2D>("BikeVibrate3");
 
             _playerShadow.LoadContent(myContent);
 
             Origin = new Vector2(_textureForward.Width / 2, _textureForward.Height / 2);
+            _texture = _textureForward;
         }
 
         public override void Update(GameTime gameTime)
         {            
             _gameTime = gameTime;
-            _texture = _textureForward;
 
             _groundPosition = 468 + (32 * _lane);
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
 
 
+
             Physics();
             ChangingLane();
             Controls();
             TemperatureChecks();
-            //Vibration();
+            Vibration();
             _playerShadow.Update(gameTime);
         }
 
@@ -76,13 +77,33 @@ namespace Prod_em_on_Team1
         private void Vibration()
         {
             _updateCounter++;
-            if(!isFalling)
+
+            double _vibrationFrequencyCalculator = Math.Round(4 / (Math.Round(_speed.X, 1) / 10), 0);
+
+            if (!isFalling && _laneTransition == 0 &&  _angleOfRotation == 0 && !_engineFailed)
             {
-                if(_updateCounter % 30 == 0 && _texture == _textureForward)
+                /*if (_updateCounter % 3 == 0 && _texture != _textureVibrate)
                 {
                     _texture = _textureVibrate;
                 }
-                else if(_updateCounter % 30 == 0 && _texture == _textureVibrate)
+                else if (_updateCounter % 3 == 0 && _texture != _textureForward)
+                {
+                    _texture = _textureForward;
+                }
+                else if (_texture == _textureTurningLeft || _texture == _textureTurningRight)
+                {
+                    _texture = _textureForward;
+                }*/
+
+                if (_updateCounter % _vibrationFrequencyCalculator == 0 && _texture != _textureVibrate)
+                {
+                    _texture = _textureVibrate;
+                }
+                else if (_updateCounter % _vibrationFrequencyCalculator == 0 && _texture != _textureForward)
+                {
+                    _texture = _textureForward;
+                }
+                else if (_texture == _textureTurningLeft || _texture == _textureTurningRight)
                 {
                     _texture = _textureForward;
                 }
