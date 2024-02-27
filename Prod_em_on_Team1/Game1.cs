@@ -13,6 +13,7 @@ namespace Prod_em_on_Team1
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private GameManager _gameManager;
         private Timer _timer;
         private double _time;
         private double _recordTime = 10;
@@ -56,6 +57,10 @@ namespace Prod_em_on_Team1
             basicFont = Content.Load<SpriteFont>("basicFont");
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Globals.SpriteBatch = _spriteBatch;
+            Globals.Content = Content;
+
+            _gameManager = new();
 
         }
 
@@ -87,6 +92,9 @@ namespace Prod_em_on_Team1
             };
             Save(gStats);
 
+            Globals.Update(gameTime);
+            _gameManager.Update();
+
             base.Update(gameTime);
         }
 
@@ -96,6 +104,7 @@ namespace Prod_em_on_Team1
             
             _spriteBatch.Begin();
 
+            _gameManager.Draw();
             _spriteBatch.DrawString(basicFont, _time.ToString(), new Vector2(100, 500), Color.White);
             _spriteBatch.DrawString(basicFont, _recordTime.ToString(), new Vector2(100, 550), Color.White);
 
