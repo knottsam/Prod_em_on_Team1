@@ -28,15 +28,7 @@ public class Tile
 
     public void Update(Player player)
     {
-        if(this.isPothole)
-        {
-            this._box.X = (int)this.Position.X;
-            this._box.Y = (int)this._position.Y; 
-            this._box.Width = (int)this._texture.Width;   
-            this._box.Height = (int)this._texture.Height;   
-        }
 
-        
     }
         
     public Vector2 Position { get { return _position; }  set {_position = value; } }

@@ -12,16 +12,13 @@ public class TrackMap
 	private Point _mapSize = new(5, 720);
 	private Tile[,] _tiles;
 	public Point TileSize { get; private set; }
+	public Tile[,] Tiles {  get {return _tiles; } private set{value = _tiles; } }	
 	public Point mapSize { get; private set; }
 
 
 	public void Update(ContentManager content, Player player)
 	{
-
-        foreach (Tile t in _tiles)
-        {
-            if (t.IsPothole && player.Box.Intersects(t.Box)) player.Collision();
-        }
+		
     }
 
 
@@ -58,7 +55,8 @@ public class TrackMap
                 if (obst_chance != 15 && _tiles[i, j].HasTexture == false ) _tiles[i, j] = new(textures[k], new(j * TileSize.X, 500 + i * TileSize.Y));
                 if (obst_chance == 15 && _tiles[i, j].HasTexture == false ) {
 					_tiles[i, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y));
-					if (i == 4)
+                    _tiles[i, j].IsPothole = true;
+                    if (i == 4)
 					{ 
 						_tiles[2, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y));
                         _tiles[1, j].HasTexture = true;
