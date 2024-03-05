@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Prod_em_on_Team1
 {
@@ -60,7 +61,7 @@ namespace Prod_em_on_Team1
 
         public void CollisionWithPothole(Tile[,] tiles)
         {
-            
+            if (this._position.X + 1 == tiles[       ]);
         }
 
         private void Physics()
