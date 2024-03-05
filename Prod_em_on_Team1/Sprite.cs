@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 
 
@@ -14,8 +13,7 @@ namespace Prod_em_on_Team1
         protected Rectangle _box;
         protected int _lane = 0;
         protected Vector2 _speed = new Vector2(0, 0);
-        protected float _angleOfRotation = 0;
-        protected int _scale = 1;
+        protected float _angleOfRotation = 0, _scale = 1.5f;
         
 
         public Sprite()

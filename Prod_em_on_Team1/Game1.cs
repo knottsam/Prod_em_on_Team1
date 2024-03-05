@@ -36,7 +36,7 @@ namespace Prod_em_on_Team1
            
             MaxSpeed = 10;
 
-
+            UI_Manager.CreateUI(Content);
             map1 = new TrackMap(Content);
             _timer = new Timer();
             _camera = new Camera();
@@ -60,7 +60,6 @@ namespace Prod_em_on_Team1
             _camera.Follow(_player);
             _timer.Update(gameTime);
             _player.Update(gameTime);
-            map1.Update(Content, _player);
             
 
             base.Update(gameTime);
@@ -72,6 +71,7 @@ namespace Prod_em_on_Team1
             _spriteBatch.Begin(transformMatrix: _camera.Transform);
             //_spriteBatch.Begin();
 
+            UI_Manager.Draw(gameTime, _spriteBatch);
             map1.Draw(_spriteBatch);
             _player.Draw(gameTime, _spriteBatch);
 

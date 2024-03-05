@@ -4,8 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using Prod_em_on_Team1;
-using System.Security.Cryptography;
-using System.Reflection.Metadata;
 
 public class TrackMap
 {
@@ -15,14 +13,9 @@ public class TrackMap
 	public Point mapSize { get; private set; }
 
 
-	public void Update(ContentManager content, Player player)
+	/*public void Update(ContentManager content, Player player)
 	{
-
-        foreach (Tile t in _tiles)
-        {
-            if (t.IsPothole && player.Box.Intersects(t.Box)) player.Collision();
-        }
-    }
+    }*/
 
 
     public TrackMap(ContentManager content)
@@ -80,9 +73,9 @@ public class TrackMap
 
 
 
-		/*for(int i = 0; i < _mapSize.X; i++)
+		for(int i = 0; i < _mapSize.X; i++)
 		{
-			ramp_chance = myRand.Next(1,100);
+			ramp_chance = 20;
 
 			
 
@@ -93,7 +86,7 @@ public class TrackMap
 					for(int q = 0; q < _mapSize.X ; q++)
 					{
 						_tiles[q,p] = new(content.Load<Texture2D>($"ramp1"), new(q * TileSize.X, 500 + p * TileSize.Y));
-						_tiles[q,p].Texture.Dispose();
+						//_tiles[q,p].Texture.Dispose();
 					}
 				}
 			}
@@ -102,7 +95,7 @@ public class TrackMap
 
 		}
 		
-		*/
+		
 	}
 
 		
@@ -120,6 +113,3 @@ public class TrackMap
             }
         }
     }
-
-
-
