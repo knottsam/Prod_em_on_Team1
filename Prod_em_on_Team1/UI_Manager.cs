@@ -12,15 +12,19 @@ namespace Prod_em_on_Team1
         private static User_Interface _gamename, _bentendo, _playButton, _loading;
         private static Rectangle mousebox, playbox;
         private static MouseState myMouse;
-        private static bool buttonpressed, buttonreleased;
+        private static bool buttonpressed, buttonreleased, _gameStarted;
         private static Timer timer;
+        private static TrackMap map1;
 
         public static void CreateUI(ContentManager myContent)
         {
-            _gamename = new User_Interface(myContent, false, "Capture", new Vector2(Game1.ScreenWidth / 2 - 500, Game1.ScreenHeight - 700));
-            _bentendo = new User_Interface(myContent, false, "nintendo", new Vector2(Game1.ScreenWidth / 2 - 500, Game1.ScreenHeight - 100));
+            _listOfUserInterfaces = new List<User_Interface>();
+
+            _gamename = new User_Interface(myContent, true, "Capture", new Vector2(Game1.ScreenWidth / 2 - 500, Game1.ScreenHeight - 700));
+            _bentendo = new User_Interface(myContent, true, "nintendo", new Vector2(Game1.ScreenWidth / 2 - 500, Game1.ScreenHeight - 100));
             _playButton = new User_Interface(myContent, false, "play_button", new Vector2(375, 425));
             _loading = new User_Interface(myContent, false, "loading1", new Vector2(0, 0));
+            map1 = new TrackMap(myContent);
 
             _listOfUserInterfaces.Add(_gamename);
             _listOfUserInterfaces.Add(_bentendo);
@@ -47,6 +51,10 @@ namespace Prod_em_on_Team1
                 {
                     UI.Draw(gametime, spriteBatch);
                 }
+            }
+            if(_gameStarted)
+            {
+                map1.Draw(spriteBatch);
             }
         }
     }

@@ -10,7 +10,6 @@ namespace Prod_em_on_Team1
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private TrackMap map1;
         private Timer _timer;
         private Player _player;
         private Camera _camera;
@@ -30,14 +29,12 @@ namespace Prod_em_on_Team1
         protected override void Initialize() 
         {
             // TODO: Add your initialization logic here
-            map1 = new TrackMap(Content);
             ScreenHeight = _graphics.PreferredBackBufferHeight;
             ScreenWidth = _graphics.PreferredBackBufferWidth;
            
             MaxSpeed = 10;
 
             UI_Manager.CreateUI(Content);
-            map1 = new TrackMap(Content);
             _timer = new Timer();
             _camera = new Camera();
             _player = new Player(new Vector2(468, 200), new Rectangle(468, 200, 32, 32), 0, new Vector2(0, 0));
@@ -68,11 +65,10 @@ namespace Prod_em_on_Team1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkBlue);
-            _spriteBatch.Begin(transformMatrix: _camera.Transform);
-            //_spriteBatch.Begin();
+            //_spriteBatch.Begin(transformMatrix: _camera.Transform);7
+            _spriteBatch.Begin();
 
             UI_Manager.Draw(gameTime, _spriteBatch);
-            map1.Draw(_spriteBatch);
             _player.Draw(gameTime, _spriteBatch);
 
 
