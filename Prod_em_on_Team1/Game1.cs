@@ -23,6 +23,7 @@ namespace Prod_em_on_Team1
         private MouseState myMouse;
         private bool buttonpressed, buttonreleased;
         private timer timer;
+        private levels levels;
 
         public Game1()
         {
@@ -40,6 +41,8 @@ namespace Prod_em_on_Team1
             bentendo = new bentendo(null, new Vector2(_graphics.PreferredBackBufferWidth / 2 - 500, _graphics.PreferredBackBufferHeight - 100), new Rectangle(), Color.White);
             play = new play(null, new Vector2(375, 425), new Rectangle(375, 425, 450, 182), Color.White);
             loading = new loading(null, new Vector2(0, 0), new Rectangle(0, 0, 1200, 750), Color.White);
+            levels = new levels(null, new Vector2(0, 0), new Rectangle(0, 0, 1200, 750), Color.White);
+            timer = new timer();
             base.Initialize();
         }
 
@@ -50,6 +53,7 @@ namespace Prod_em_on_Team1
             bentendo.LoadContent(Content);
             play.LoadContent(Content);
             loading.LoadContent(Content);
+            levels.LoadContent(Content);
             // TODO: use this.Content to load your game content here
         }
 
@@ -58,11 +62,11 @@ namespace Prod_em_on_Team1
             this.IsMouseVisible = true;
             
             myMouse =  Mouse.GetState();
-            
+            timer.Update(gameTime);
             mousebox = new Rectangle(myMouse.X, myMouse.Y, 1, 1);
             playbox = new Rectangle(375, 425, 450, 182);
-            timer = new timer();
-
+            
+            
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -85,19 +89,25 @@ namespace Prod_em_on_Team1
             {
                 buttonreleased = true;
             }
-           
+
             // TODO: Add your drawing code here
-            
             if (buttonpressed == true)
                 if(buttonreleased == true)
                 {
-                    
                     GraphicsDevice.Clear(Color.DarkBlue);
-                    _spriteBatch.Begin();
-                    loading.Draw(_spriteBatch);
-                    _spriteBatch.End();
-
+                        _spriteBatch.Begin();
+                        loading.Draw(_spriteBatch);
+                        _spriteBatch.End();
+                    timer.StartTimer(gameTime);
+                    timer.GetTime();
                 }
+            if (timer.TimePassed >= 0)
+            {
+                GraphicsDevice.Clear(Color.DarkBlue);
+                _spriteBatch.Begin();
+                levels.Draw(_spriteBatch);
+                _spriteBatch.End();
+            }
 
             base.Draw(gameTime);
         }
