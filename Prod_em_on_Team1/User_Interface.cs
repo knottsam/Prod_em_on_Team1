@@ -9,19 +9,17 @@ namespace Prod_em_on_Team1
         private bool _isDrawn;
         public User_Interface(ContentManager myContent, bool isDrawn, string nameOfTexture, Vector2 inPosition)
         {
+            _position = inPosition;
+
             _isDrawn = isDrawn;
             LoadContent(myContent, nameOfTexture);
         }
         private void LoadContent(ContentManager myContent, string nameOfTexture)
         {
             myContent.RootDirectory = "content";
-            _texture = myContent.Load<Texture2D>(nameOfTexture);//ADD YARA'S FILES
+            _texture = myContent.Load<Texture2D>(nameOfTexture);
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_texture, _position, Color.White);
-        }
 
         public bool IsDrawn
         {

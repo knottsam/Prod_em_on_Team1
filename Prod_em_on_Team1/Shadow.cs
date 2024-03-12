@@ -15,7 +15,7 @@ namespace Prod_em_on_Team1
             _scale = 1;
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             _position.X = _player.Position.X - _player.Texture.Width / 2;
             _position.Y = _player.GroundPosition - 5;

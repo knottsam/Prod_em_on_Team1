@@ -10,10 +10,11 @@ namespace Prod_em_on_Team1
     {
         private static List<User_Interface> _listOfUserInterfaces;
         private static User_Interface _gamename, _bentendo, _playButton, _loading;
-        private static Rectangle mousebox, playbox;
-        private static MouseState myMouse;
-        private static bool buttonpressed, buttonreleased, _gameStarted;
-        private static Timer timer;
+        private static Rectangle _mousebox, _playbox;
+        private static MouseState _myMouse;
+        private static bool buttonpressed, buttonreleased;
+        public static bool gameStarted;
+        private static Timer _timer;
         private static TrackMap map1;
 
         public static void CreateUI(ContentManager myContent)
@@ -31,30 +32,51 @@ namespace Prod_em_on_Team1
             _listOfUserInterfaces.Add(_playButton);
             _listOfUserInterfaces.Add(_loading);
 
-            mousebox = new Rectangle(myMouse.X, myMouse.Y, 1, 1);
-            playbox = new Rectangle(375, 425, 450, 182);
-            timer = new Timer();
+            _mousebox = new Rectangle(_myMouse.X, _myMouse.Y, 1, 1);
+            _playbox = new Rectangle(375, 425, 450, 182);
+            _timer = new Timer();
         }
 
-        public static void Update()
+        public static void Update(GameTime gameTime)
         {
-            if (myMouse.LeftButton == ButtonState.Pressed && mousebox.Intersects(playbox))
+            _myMouse = Mouse.GetState();
+            _timer.Update(gameTime);
+            _mousebox.X = _myMouse.X;
+            _mousebox.Y = _myMouse.Y;
+
+            if (_myMouse.LeftButton == ButtonState.Pressed && _mousebox.Intersects(_playbox))
             {
                 buttonpressed = true;
+                _gamename.IsDrawn = false;
+                _bentendo.IsDrawn = false;
+                _playButton.IsDrawn = false;
+                _loading.IsDrawn = true;
+
+                _timer.StartTimer(gameTime);
+            }
+            if(_timer.TimePassed > 3)
+            {
+                gameStarted = true;
+                _timer.Active = false;
             }
         }
         public static void Draw(GameTime gametime, SpriteBatch spriteBatch)
         {
-            foreach(User_Interface UI in _listOfUserInterfaces)
-            {
-                if(UI.IsDrawn)
-                {
-                    UI.Draw(gametime, spriteBatch);
-                }
-            }
-            if(_gameStarted)
+            
+            
+            if(gameStarted)
             {
                 map1.Draw(spriteBatch);
+            }
+            else
+            {
+                foreach (User_Interface UI in _listOfUserInterfaces)
+                {
+                    if (UI.IsDrawn)
+                    {
+                        UI.Draw(gametime, spriteBatch);
+                    }
+                }
             }
         }
     }

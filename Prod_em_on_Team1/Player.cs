@@ -50,13 +50,15 @@ namespace Prod_em_on_Team1
             _texture = _textureForward;
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             _gameTime = gameTime;
 
             _groundPosition = 468 + (32 * _lane);
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
+
+
 
 
 

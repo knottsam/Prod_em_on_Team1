@@ -32,16 +32,7 @@ namespace Prod_em_on_Team1
         {
 
         }
-        public virtual void Update(GameTime gameTime)
-        {
-            _position += _speed;
-            _box.X = (int)_position.X;
-            _box.Y = (int)_position.Y;
-            _box.Width = (int)this.Texture.Width;
-            _box.Height = (int)this.Texture.Height;
-            _position.Y = 468 + (32 * _lane);
 
-        }
 
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)

@@ -52,6 +52,7 @@ namespace Prod_em_on_Team1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            UI_Manager.Update(gameTime);
             _camera.Follow(_player);
             _timer.Update(gameTime);
             _player.Update(gameTime);
@@ -63,8 +64,14 @@ namespace Prod_em_on_Team1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkBlue);
-            //_spriteBatch.Begin(transformMatrix: _camera.Transform);
-            _spriteBatch.Begin();
+            if(UI_Manager.gameStarted)
+            {
+                _spriteBatch.Begin(transformMatrix: _camera.Transform);
+            }
+            else
+            {
+                _spriteBatch.Begin();
+            }
 
             UI_Manager.Draw(gameTime, _spriteBatch);
             _player.Draw(gameTime, _spriteBatch);
