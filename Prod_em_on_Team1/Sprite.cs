@@ -13,7 +13,7 @@ namespace Prod_em_on_Team1
         protected Rectangle _box;
         protected int _lane = 0;
         protected Vector2 _speed = new Vector2(0, 0);
-        protected float _angleOfRotation = 0, _scale = 1.5f;
+        protected float _angleOfRotation = 0, _scale = 1;
         
 
         public Sprite()
@@ -46,8 +46,8 @@ namespace Prod_em_on_Team1
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            //spriteBatch.Draw(_texture, _position, Color.White);
-            spriteBatch.Draw(_texture, _position, null, Color.White, _angleOfRotation, Origin, _scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(_texture, _position, Color.White);
+            //spriteBatch.Draw(_texture, _position, null, Color.White, _angleOfRotation, Origin, _scale, SpriteEffects.None, 0);
         }
 
         public Vector2 Position

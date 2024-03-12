@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Data;
-using System.Threading;
 
 namespace Prod_em_on_Team1
 {
@@ -65,7 +63,7 @@ namespace Prod_em_on_Team1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkBlue);
-            //_spriteBatch.Begin(transformMatrix: _camera.Transform);7
+            //_spriteBatch.Begin(transformMatrix: _camera.Transform);
             _spriteBatch.Begin();
 
             UI_Manager.Draw(gameTime, _spriteBatch);

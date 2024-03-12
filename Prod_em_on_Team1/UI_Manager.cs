@@ -22,7 +22,7 @@ namespace Prod_em_on_Team1
 
             _gamename = new User_Interface(myContent, true, "Capture", new Vector2(Game1.ScreenWidth / 2 - 500, Game1.ScreenHeight - 700));
             _bentendo = new User_Interface(myContent, true, "nintendo", new Vector2(Game1.ScreenWidth / 2 - 500, Game1.ScreenHeight - 100));
-            _playButton = new User_Interface(myContent, false, "play_button", new Vector2(375, 425));
+            _playButton = new User_Interface(myContent, true, "play_button", new Vector2(375, 425));
             _loading = new User_Interface(myContent, false, "loading1", new Vector2(0, 0));
             map1 = new TrackMap(myContent);
 

@@ -18,6 +18,11 @@ namespace Prod_em_on_Team1
             _texture = myContent.Load<Texture2D>(nameOfTexture);//ADD YARA'S FILES
         }
 
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(_texture, _position, Color.White);
+        }
+
         public bool IsDrawn
         {
             get { return _isDrawn; }
