@@ -21,7 +21,7 @@ namespace Prod_em_on_Team1
         private loading loading;
         private Rectangle mousebox, playbox;
         private MouseState myMouse;
-        private bool buttonpressed, buttonreleased;
+        private bool buttonpressed, buttonreleased, startplay = false, startedplay = false;
         private timer timer;
         private levels levels;
 
@@ -62,7 +62,7 @@ namespace Prod_em_on_Team1
             this.IsMouseVisible = true;
             
             myMouse =  Mouse.GetState();
-            timer.Update(gameTime);
+            
             mousebox = new Rectangle(myMouse.X, myMouse.Y, 1, 1);
             playbox = new Rectangle(375, 425, 450, 182);
             
@@ -98,15 +98,23 @@ namespace Prod_em_on_Team1
                         _spriteBatch.Begin();
                         loading.Draw(_spriteBatch);
                         _spriteBatch.End();
-                    timer.StartTimer(gameTime);
-                    timer.GetTime();
+                    startplay = true;
                 }
-            if (timer.TimePassed >= 0)
+            if(startplay == true)
             {
-                GraphicsDevice.Clear(Color.DarkBlue);
-                _spriteBatch.Begin();
-                levels.Draw(_spriteBatch);
-                _spriteBatch.End();
+                timer.StartTimer(gameTime);
+                startedplay = true;
+            }
+            if(startedplay == true)
+            {
+                timer.Update(gameTime);
+                if (timer.TimePassed >= 3)
+                {
+                    GraphicsDevice.Clear(Color.DarkBlue);
+                    _spriteBatch.Begin();
+                    levels.Draw(_spriteBatch);
+                    _spriteBatch.End();
+                }
             }
 
             base.Draw(gameTime);
