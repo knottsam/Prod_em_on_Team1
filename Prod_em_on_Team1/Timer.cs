@@ -5,7 +5,7 @@ namespace Prod_em_on_Team1
 {
     internal class Timer
     {
-        private bool _active = true;
+        private bool _active;
         private double _timeStarted;
         public Timer() { }
 

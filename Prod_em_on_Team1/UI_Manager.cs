@@ -13,7 +13,6 @@ namespace Prod_em_on_Team1
         private static Rectangle _mousebox, _playbox;
         private static MouseState _myMouse;
         private static bool buttonpressed, buttonreleased;
-        public static bool gameStarted;
         private static Timer _timer;
         private static TrackMap map1;
 
@@ -56,7 +55,7 @@ namespace Prod_em_on_Team1
             }
             if(_timer.TimePassed > 3)
             {
-                gameStarted = true;
+                Game1.gameStarted = true;
                 _timer.Active = false;
             }
         }
@@ -64,7 +63,7 @@ namespace Prod_em_on_Team1
         {
             
             
-            if(gameStarted)
+            if(Game1.gameStarted)
             {
                 map1.Draw(spriteBatch);
             }

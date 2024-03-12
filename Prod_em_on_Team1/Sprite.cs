@@ -38,7 +38,6 @@ namespace Prod_em_on_Team1
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture, _position, Color.White);
-            //spriteBatch.Draw(_texture, _position, null, Color.White, _angleOfRotation, Origin, _scale, SpriteEffects.None, 0);
         }
 
         public Vector2 Position

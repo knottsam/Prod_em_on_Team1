@@ -6,6 +6,7 @@ namespace Prod_em_on_Team1
 {
     public class Game1 : Game
     {
+        public static bool gameStarted;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Timer _timer;
@@ -35,7 +36,7 @@ namespace Prod_em_on_Team1
             UI_Manager.CreateUI(Content);
             _timer = new Timer();
             _camera = new Camera();
-            _player = new Player(new Vector2(468, 200), new Rectangle(468, 200, 32, 32), 0, new Vector2(0, 0));
+            _player = new Player(new Vector2(468, 468), new Rectangle(468, 468, 32, 32), 0, new Vector2(0, 0));
             base.Initialize();
         }
 
@@ -53,10 +54,13 @@ namespace Prod_em_on_Team1
                 Exit();
 
             UI_Manager.Update(gameTime);
-            _camera.Follow(_player);
-            _timer.Update(gameTime);
-            _player.Update(gameTime);
-            
+
+            if(gameStarted)
+            {
+                _camera.Follow(_player);
+                _timer.Update(gameTime);
+                _player.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
@@ -64,17 +68,17 @@ namespace Prod_em_on_Team1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkBlue);
-            if(UI_Manager.gameStarted)
+            if (gameStarted)
             {
                 _spriteBatch.Begin(transformMatrix: _camera.Transform);
+                UI_Manager.Draw(gameTime, _spriteBatch);
+                _player.Draw(gameTime, _spriteBatch);
             }
             else
             {
                 _spriteBatch.Begin();
+                UI_Manager.Draw(gameTime, _spriteBatch);
             }
-
-            UI_Manager.Draw(gameTime, _spriteBatch);
-            _player.Draw(gameTime, _spriteBatch);
 
 
             _spriteBatch.End();

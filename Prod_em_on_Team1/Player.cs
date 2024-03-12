@@ -2,14 +2,12 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.Direct2D1.Effects;
 using System;
 
 namespace Prod_em_on_Team1
 {
     public class Player : Sprite
     {
-        private GameTime _gameTime;
         private Texture2D _textureForward;
         private Texture2D _textureTurningRight;
         private Texture2D _textureTurningLeft;
@@ -52,8 +50,6 @@ namespace Prod_em_on_Team1
 
         public void Update(GameTime gameTime)
         {
-            _gameTime = gameTime;
-
             _groundPosition = 468 + (32 * _lane);
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
@@ -75,6 +71,20 @@ namespace Prod_em_on_Team1
         {
             spriteBatch.Draw(_texture, _position, null, Color.White, _angleOfRotation, Origin, _scale, SpriteEffects.None, 0);
             _playerShadow.Draw(gameTime, spriteBatch);
+        }
+
+        public void ResetBike()
+        {
+            _position.X = 468;
+            _position.Y = 468;
+            _box.X = 468;
+            _box.Y = 468;
+            _speed = new Vector2(0,0);
+            _lane = 0;
+            _temperature = 0;
+            _engineFailed = false;
+            _updateCounter = 0;
+            _texture = _textureForward;
         }
 
         private void Vibration()
