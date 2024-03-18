@@ -21,9 +21,9 @@ namespace Prod_em_on_Team1
         private loading loading;
         private Rectangle mousebox, playbox;
         private MouseState myMouse;
-        private bool buttonpressed, buttonreleased, startplay = false, startedplay = false;
+        private bool buttonpressed, buttonreleased, startplay = false, startedplay = false, playnow = false;
         private timer timer;
-        private levels levels;
+        
 
         public Game1()
         {
@@ -41,7 +41,6 @@ namespace Prod_em_on_Team1
             bentendo = new bentendo(null, new Vector2(_graphics.PreferredBackBufferWidth / 2 - 500, _graphics.PreferredBackBufferHeight - 100), new Rectangle(), Color.White);
             play = new play(null, new Vector2(375, 425), new Rectangle(375, 425, 450, 182), Color.White);
             loading = new loading(null, new Vector2(0, 0), new Rectangle(0, 0, 1200, 750), Color.White);
-            levels = new levels(null, new Vector2(0, 0), new Rectangle(0, 0, 1200, 750), Color.White);
             timer = new timer();
             base.Initialize();
         }
@@ -53,7 +52,6 @@ namespace Prod_em_on_Team1
             bentendo.LoadContent(Content);
             play.LoadContent(Content);
             loading.LoadContent(Content);
-            levels.LoadContent(Content);
             // TODO: use this.Content to load your game content here
         }
 
@@ -103,18 +101,22 @@ namespace Prod_em_on_Team1
             if(startplay == true)
             {
                 timer.StartTimer(gameTime);
+                timer.Active = true;
+                timer.Update(gameTime);
                 startedplay = true;
             }
             if(startedplay == true)
             {
+                timer.GetTime();
                 timer.Update(gameTime);
-                if (timer.TimePassed >= 3)
-                {
-                    GraphicsDevice.Clear(Color.DarkBlue);
-                    _spriteBatch.Begin();
-                    levels.Draw(_spriteBatch);
-                    _spriteBatch.End();
-                }
+                playnow = true;
+            }
+            if (playnow = true && timer.TimePassed == 3)
+            {
+                GraphicsDevice.Clear(Color.DarkBlue);
+                _spriteBatch.Begin();
+
+                _spriteBatch.End();
             }
 
             base.Draw(gameTime);
