@@ -22,7 +22,7 @@ namespace Prod_em_on_Team1
             _speed.X = _player.Speed.X;
         }
 
-        public void LoadContent(ContentManager myContent)
+        public override void LoadContent(ContentManager myContent)
         {
             myContent.RootDirectory = "Content";
 

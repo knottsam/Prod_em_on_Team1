@@ -6,16 +6,13 @@ namespace Prod_em_on_Team1
 {
     public class Game1 : Game
     {
-        public static bool gameStarted;
+        public static bool gameStarted, raceStarted;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Timer _timer;
         private Player _player;
         private Camera _camera;
-        public static int ScreenHeight;
-        public static int ScreenWidth;
-        public static int MaxSpeed;
-
+        public static int ScreenHeight, ScreenWidth, MaxSpeed;
 
         public Game1()
         {
@@ -33,10 +30,11 @@ namespace Prod_em_on_Team1
            
             MaxSpeed = 10;
 
-            UI_Manager.CreateUI(Content);
+            
             _timer = new Timer();
             _camera = new Camera();
             _player = new Player(new Vector2(468, 468), new Rectangle(468, 468, 32, 32), 0, new Vector2(0, 0));
+            UI_Manager.CreateUI(Content, _player);
             base.Initialize();
         }
 

@@ -15,27 +15,69 @@ public class Tile
     private Vector2 _position;
     private Rectangle _box;
     private bool hasTexture;
-    private bool isPothole;
+    private string _type;
 
-    public Tile(Texture2D texture, Vector2 position)
+    public Tile(Texture2D texture, Vector2 position, string type)
     {
         _texture = texture;
         _position = position;
+        _type = type;
         _origin = new Vector2(_texture.Width / 2, _texture.Height / 2);
-        this.hasTexture = false;
-        this.isPothole = false; 
+
+        if (_type == "pothole")
+        {
+            _box.X = (int)Position.X;
+            _box.Y = (int)_position.Y - 32;
+            _box.Width = 32;
+            _box.Height = 32;
+        }
+        else if(_type == "ramp")
+        {
+            _box = new Rectangle((int)_position.X - 100, 468, 192, 192);
+        }
     }
 
     public void Update(Player player)
     {
-        if(this.isPothole)
+        if (_type == "pothole")
         {
-            this._box.X = (int)this.Position.X;
-            this._box.Y = (int)this._position.Y; 
-            this._box.Width = (int)this._texture.Width;   
-            this._box.Height = (int)this._texture.Height;   
+            if (_box.Intersects(player.Box))
+            {
+                if (player.AngleOfRotation < 0 && player.Speed.X > 2)
+                {
+                    player.Speed = new Vector2(player.Speed.X - 2, player.Speed.Y);
+                }
+                else if (player.Speed.X > 4)
+                {
+                    player.Speed = new Vector2(player.Speed.X - 1, player.Speed.Y);
+                }
+            }
         }
+        else if(_type == "ramp")
+        {
+            if(_box.Intersects(player.Box))
+            {
+                if(player.Speed.Y > -4)
+                {
+                    player.Speed = new Vector2(player.Speed.X, (int)(-player.Speed.X * 0.3));
 
+                }
+                if (player.AngleOfRotation - 0.2f >= -0.8f)
+                {
+                    player.AngleOfRotation -= 0.2f;
+                }
+                else if(player.AngleOfRotation > -0.8f || player.AngleOfRotation < -0.8f)
+                {
+                    player.AngleOfRotation = -0.8f;
+                }
+                
+                if(player.Position.X >= _position.X && player.Position.X <= _position.X + 10)
+                {
+                    player.Speed -= new Vector2(0, 6);
+                }
+            }
+        }
+        
         
     }
         
@@ -46,12 +88,23 @@ public class Tile
 
     public bool HasTexture { get { return hasTexture; }  set { hasTexture = value; } }
 
-    public bool IsPothole { get { return isPothole; } set { isPothole = value; } }
+    public string Type { get { return _type; } set { _type = value; } }
 
     public Rectangle Box { get { return _box; } set { _box = value; } }
     public void Draw(SpriteBatch _spriteBatch)
     {
-        _spriteBatch.Draw(_texture, Position, null, Color.White, 0f, Origin, 2.6f, SpriteEffects.None, 0f);
+        /*if(_underRamp < 0)
+        {
+            _spriteBatch.Draw(_texture, Position, null, Color.White, 0f, Origin, 2.6f, SpriteEffects.None, 0f);
+        }*/
+        if(_type == "ramp")
+        {
+            _spriteBatch.Draw(_texture, Position, null, Color.White, 0f, Origin, 1.36f, SpriteEffects.None, 0f);
+        }
+        else
+        {
+            _spriteBatch.Draw(_texture, Position, null, Color.White, 0f, Origin, 2.6f, SpriteEffects.None, 0f);
+        }
     }
 }
 

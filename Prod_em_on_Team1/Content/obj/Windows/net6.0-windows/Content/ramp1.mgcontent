@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/jacom/Source/Repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/ramp1.png</SourceFile>
-  <SourceTime>2024-03-12T22:54:40.1509493+00:00</SourceTime>
-  <DestFile>C:/Users/jacom/Source/Repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/bin/Windows/Content/ramp1.xnb</DestFile>
-  <DestTime>2024-03-12T22:55:07.9577995+00:00</DestTime>
+  <SourceFile>C:/Users/jacom/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/../../../../../OneDrive/Pictures/Programming/Excitebike/ramp1.png</SourceFile>
+  <SourceTime>2024-03-19T01:39:26.5619861+00:00</SourceTime>
+  <DestFile>C:/Users/jacom/source/repos/Prod_em_on_Team1/Prod_em_on_Team1/Content/bin/Windows/Content/ramp1.xnb</DestFile>
+  <DestTime>2024-03-19T01:48:47.4331537+00:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T12:44:56+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

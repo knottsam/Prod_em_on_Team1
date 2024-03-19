@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
@@ -9,13 +9,14 @@ public class TrackMap
 {
 	private Point _mapSize = new(5, 720);
 	private Tile[,] _tiles;
+	private Gate[] _gates;
 	public Point TileSize { get; private set; }
 	public Point mapSize { get; private set; }
 
 
-	/*public void Update(ContentManager content, Player player)
+	*//*public void Update(ContentManager content, Player player)
 	{
-    }*/
+    }*//*
 
 
     public TrackMap(ContentManager content)
@@ -45,21 +46,21 @@ public class TrackMap
 				int k = myRand.Next(0, textures.Count);
                 int obst_chance = myRand.Next(0, 100);
 
-                _tiles[i, j] = new(textures[k], new(j * TileSize.X, 500 + i * TileSize.Y));
+                _tiles[i, j] = new(textures[k], new(j * TileSize.X, 500 + i * TileSize.Y), false);
 
 				 
-                if (obst_chance != 15 && _tiles[i, j].HasTexture == false ) _tiles[i, j] = new(textures[k], new(j * TileSize.X, 500 + i * TileSize.Y));
-                if (obst_chance == 15 && _tiles[i, j].HasTexture == false ) {
-					_tiles[i, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y));
+                if (obst_chance != 15 && _tiles[i, j].HasTexture == false ) _tiles[i, j] = new(textures[k], new(j * TileSize.X, 500 + i * TileSize.Y), false);
+                if (obst_chance == 15 && _tiles[i, j].HasTexture == false) {
+					_tiles[i, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y), true);
 					if (i == 4)
 					{ 
-						_tiles[2, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y));
+						_tiles[2, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y), true);
                         _tiles[1, j].HasTexture = true;
 						_tiles[1, j].IsPothole = true; 
                     }
 					else if (i == 3)
 					{
-						_tiles[1, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y));
+						_tiles[1, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y), true);
 						_tiles[1, j].HasTexture = true;
                         _tiles[1, j].IsPothole = true;
                     }
@@ -85,7 +86,7 @@ public class TrackMap
 				{
 					for(int q = 0; q < _mapSize.X ; q++)
 					{
-						_tiles[q,p] = new(content.Load<Texture2D>($"ramp1"), new(q * TileSize.X, 500 + p * TileSize.Y));
+						_tiles[q,p] = new(content.Load<Texture2D>($"ramp1"), new(q * TileSize.X, 500 + p * TileSize.Y), false);
 						//_tiles[q,p].Texture.Dispose();
 					}
 				}
@@ -94,8 +95,42 @@ public class TrackMap
 
 
 		}
-		
-		
+
+		_gates = new Gate[6];
+		for(int i=0;i<6;i++)
+		{
+			_gates[i] = new Gate(new Vector2(500,468 + i * 32), content);
+		}
+	}
+
+	public void Update(Player player)
+	{
+		*//*int temp1 = (int)((player.Position.Y - 468) / 32);
+		int temp2 = (int)((player.Position.X - 500) / 32);
+
+        if (_tiles[temp1 , temp2].IsPothole && player.Speed.X > 3)
+		{
+			player.Speed = new Vector2(3, player.Speed.Y);
+		}
+
+
+		if(Game1.raceStarted)
+		{
+
+		}*//*
+
+		foreach(Tile tile in _tiles)
+		{
+			tile.Update(player);
+		}
+	}
+
+	public void OpenGates()
+	{
+		foreach(Gate gate in _gates)
+		{
+			gate.Open();
+		}
 	}
 
 		
@@ -111,5 +146,10 @@ public class TrackMap
             {
                 for(int x = 0; x < _mapSize.X; x++) _tiles[x, y].Draw(spriteBatch);
             }
+			
+			foreach(Gate gate in _gates)
+			{
+				gate.Draw(spriteBatch);
+			}
         }
-    }
+    }*/

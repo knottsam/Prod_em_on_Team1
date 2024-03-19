@@ -72,5 +72,11 @@ namespace Prod_em_on_Team1
             get { return _speed; }
             set { _speed = value; }
         }
+
+        public float AngleOfRotation
+        {
+            get { return _angleOfRotation; }
+            set { _angleOfRotation = value; }
+        }
     }
 }
