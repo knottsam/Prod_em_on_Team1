@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Prod_em_on_Team1
 {
@@ -27,6 +28,8 @@ namespace Prod_em_on_Team1
             _box = inBox;
             _lane = inLane;
             _speed = inSpeed;
+
+            
         }
 
         public override void LoadContent(ContentManager myContent)
@@ -41,14 +44,20 @@ namespace Prod_em_on_Team1
             Origin = new Vector2(_textureForward.Width / 2, _textureForward.Height / 2);
         }
 
+        public void sortTemperature() { 
+            
+        }
+
+
         public override void Update()
         {
             _texture = _textureForward;
             _groundPosition = 468 + (32 * _lane);
+
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
-            _box.Width = (int)this.Texture.Width;
-            _box.Height = (int)this.Texture.Height;
+            _box.Width = 32;
+            _box.Height = 32;
 
             Physics();
             Controls();
@@ -57,7 +66,8 @@ namespace Prod_em_on_Team1
 
         public void Collision()
         {
-            _speed.X = 0;
+            _speed.X -= 0.25f;
+            
         }
 
         private void Physics()
@@ -105,6 +115,7 @@ namespace Prod_em_on_Team1
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && _speed.X < Game1.MaxSpeed && _position.Y == _groundPosition) //acceleration: the bike is back wheel drive so reverse wheelies stop acceleration
             {
+                _temperature = (int)Math.Clamp((int)_temperature + 1, (int)0, (int)100);
                 if (_angleOfRotation < 0)//wheelies are cool and therefore fast
                 {
                     _speed.X += 0.3f;
@@ -116,7 +127,7 @@ namespace Prod_em_on_Team1
 
                 //increase temperature
             }
-
+            if(Keyboard.GetState().IsKeyUp(Keys.Space)) _temperature = (int)Math.Clamp((int)_temperature - 1, (int)0, (int)100);
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 _angleOfRotation = -1;

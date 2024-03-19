@@ -6,33 +6,36 @@ using System.Collections.Generic;
 using Prod_em_on_Team1;
 using System.Security.Cryptography;
 using System.Reflection.Metadata;
+using Microsoft.Xna.Framework.Input;
 
 public class TrackMap
 {
-	private Point _mapSize = new(5, 720);
+	private Point _mapSize = new(5, 920);
+	private Point outsideMapSize = new(6,920);
 	private Tile[,] _tiles;
-	public Point TileSize { get; private set; }
+	private Point walls = new Point(1, 92);
+	private Point crowd = new Point(1, 92);
+	private Tile[,] grassTiles;
+    private Tile[,] wallTiles;
+	private Tile[,] crowdTiles;
+    public Point TileSize { get; private set; }
 	public Point mapSize { get; private set; }
 
 
-	public void Update(ContentManager content, Player player)
-	{
-
-        foreach (Tile t in _tiles)
-        {
-            if (t.IsPothole && player.Box.Intersects(t.Box)) player.Collision();
-        }
-    }
 
 
+	
     public TrackMap(ContentManager content)
 	{
 		_tiles = new Tile[_mapSize.X, _mapSize.Y];
+		grassTiles = new Tile[outsideMapSize.X, outsideMapSize.Y];
+		wallTiles = new Tile[walls.X, walls.Y];
+		crowdTiles = new Tile[crowd.X, crowd.Y];
 
 		List<Texture2D> textures = new List<Texture2D>();
-		List<Sprite> ramps = new List<Sprite>();
+	
 
-		for (int i = 0; i < 3; i++) textures.Add(content.Load<Texture2D>($"track{i + 1}"));
+        for (int i = 0; i < 3; i++) textures.Add(content.Load<Texture2D>($"track{i + 1}"));
 
 
 		TileSize = new(textures[0].Width, textures[0].Height);
@@ -40,69 +43,57 @@ public class TrackMap
         
 
         Random myRand = new Random();
-		int ramp_chance;
 
-		
 
+		for(int i = 0; i < outsideMapSize.X; i++)
+		{
+			for(int j = 0; j < outsideMapSize.Y; j++)
+			{
+				grassTiles[i, j] = new(content.Load<Texture2D>($"green square"), new(j * TileSize.X, 264 + i * TileSize.Y), true);
+
+            }
+		}
+
+		for(int i = 0; i < walls.Y; i++)
+		{
+			wallTiles[0, i] = new(content.Load<Texture2D>($"wall with logo"), new(i * 10 * TileSize.X, 181 + TileSize.Y), true);
+        }
+        for (int i = 0; i < walls.Y; i++)
+        {
+            crowdTiles[0, i] = new(content.Load<Texture2D>($"crowd"), new(i * 10 * TileSize.X, 60 + TileSize.Y), true);
+        }
 
         for (int i = 0; i < _mapSize.X; i++)
 		{
-            
-            for (int j = 0; j < _mapSize.Y; j++) {
+
+			for (int j = 0; j < _mapSize.Y; j++)
+			{
 				int k = myRand.Next(0, textures.Count);
-                int obst_chance = myRand.Next(0, 100);
+				int obst_chance = myRand.Next(0, 120); //random chance for tile to be pothole
+				int boost_chance = myRand.Next(0, 200);
 
-                _tiles[i, j] = new(textures[k], new(j * TileSize.X, 500 + i * TileSize.Y));
-
-				 
-                if (obst_chance != 15 && _tiles[i, j].HasTexture == false ) _tiles[i, j] = new(textures[k], new(j * TileSize.X, 500 + i * TileSize.Y));
-                if (obst_chance == 15 && _tiles[i, j].HasTexture == false ) {
-					_tiles[i, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y));
-					if (i == 4)
-					{ 
-						_tiles[2, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y));
-                        _tiles[1, j].HasTexture = true;
-						_tiles[1, j].IsPothole = true; 
-                    }
-					else if (i == 3)
-					{
-						_tiles[1, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y));
-						_tiles[1, j].HasTexture = true;
-                        _tiles[1, j].IsPothole = true;
-                    }
-				}
 				
-			}
-		}
+				_tiles[i, j] = new Tile(false);
 
 
-
-
-
-
-		/*for(int i = 0; i < _mapSize.X; i++)
-		{
-			ramp_chance = myRand.Next(1,100);
-
-			
-
-			if (ramp_chance == 20) { 
-			
-				for(int p = i; p < i + 8; p++)
+				if (obst_chance != 15 && _tiles[i, j].HasTexture == false && boost_chance != 15) {
+                    _tiles[i, j] = new(textures[k], new(j * TileSize.X, 500 + i * TileSize.Y), true);
+                }
+				
+				if (obst_chance == 15 && !_tiles[i, j].HasTexture && boost_chance!= 15 || obst_chance == 15 && boost_chance == 15 && !_tiles[i, j].HasTexture)
 				{
-					for(int q = 0; q < _mapSize.X ; q++)
-					{
-						_tiles[q,p] = new(content.Load<Texture2D>($"ramp1"), new(q * TileSize.X, 500 + p * TileSize.Y));
-						_tiles[q,p].Texture.Dispose();
-					}
+					_tiles[i, j] = new(content.Load<Texture2D>($"pothole1"), new(j * TileSize.X, 500 + i * TileSize.Y),true);
+					_tiles[i, j].IsPothole = true;
+
 				}
+				if (boost_chance == 15 && obst_chance != 15 && !_tiles[i, j].HasTexture)
+				{
+                    _tiles[i, j] = new(content.Load<Texture2D>($"boost"), new(j * TileSize.X, 500 + i * TileSize.Y),true);
+                    _tiles[i, j].IsBoost = true;
+                }
 			}
-		
-
-
 		}
-		
-		*/
+
 	}
 
 		
@@ -118,8 +109,18 @@ public class TrackMap
             {
                 for(int x = 0; x < _mapSize.X; x++) _tiles[x, y].Draw(spriteBatch);
             }
-        }
-    }
 
+        for (int y = 0; y < outsideMapSize.Y; y++)
+        {
+            for (int x = 0; x < outsideMapSize.X; x++) grassTiles[x, y].Draw(spriteBatch);
+        }
+
+		for(int y = 0; y < walls.Y; y++)
+		{
+			wallTiles[0,y].Draw(spriteBatch);
+			crowdTiles[0, y].Draw(spriteBatch);
+		}
+    }
+    }
 
 

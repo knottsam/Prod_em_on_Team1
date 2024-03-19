@@ -16,28 +16,35 @@ public class Tile
     private Rectangle _box;
     private bool hasTexture;
     private bool isPothole;
+    private bool isBoost;
 
-    public Tile(Texture2D texture, Vector2 position)
+    public Tile(Texture2D texture, Vector2 position, bool _hasTexture)
     {
         _texture = texture;
         _position = position;
+        hasTexture = _hasTexture;
         _origin = new Vector2(_texture.Width / 2, _texture.Height / 2);
-        this.hasTexture = false;
-        this.isPothole = false; 
-    }
 
-    public void Update(Player player)
-    {
-        if(this.isPothole)
+        if (this.isPothole)
         {
             this._box.X = (int)this.Position.X;
-            this._box.Y = (int)this._position.Y; 
-            this._box.Width = (int)this._texture.Width;   
-            this._box.Height = (int)this._texture.Height;   
+            this._box.Y = (int)this._position.Y;
+            this._box.Width = (int)this._texture.Width;
+            this._box.Height = (int)this._texture.Height;
         }
+    }
+
+    public Tile(bool _hasTexture)
+    {
+        hasTexture = _hasTexture;
+    }
+
+    /*public void Update(Player player)
+    {
+       
 
         
-    }
+    }*/
         
     public Vector2 Position { get { return _position; }  set {_position = value; } }
     public Vector2 Origin { get { return _origin; }  set { _origin = value; } }
@@ -47,6 +54,9 @@ public class Tile
     public bool HasTexture { get { return hasTexture; }  set { hasTexture = value; } }
 
     public bool IsPothole { get { return isPothole; } set { isPothole = value; } }
+
+    public bool IsBoost { get { return isBoost; } set { isBoost = value; } }
+
 
     public Rectangle Box { get { return _box; } set { _box = value; } }
     public void Draw(SpriteBatch _spriteBatch)

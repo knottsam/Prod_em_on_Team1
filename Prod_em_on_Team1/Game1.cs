@@ -12,6 +12,7 @@ namespace Prod_em_on_Team1
         private SpriteBatch _spriteBatch;
         private TrackMap map1;
         private Timer _timer;
+        private TempBoard tempBoard;
         private Player _player;
         private Camera _camera;
         public static int ScreenHeight;
@@ -40,6 +41,7 @@ namespace Prod_em_on_Team1
             map1 = new TrackMap(Content);
             _timer = new Timer();
             _camera = new Camera();
+            tempBoard = new TempBoard(Content);
             _player = new Player(new Vector2(468, 200), new Rectangle(468, 200, 32, 32), 0, new Vector2(0, 0));
             base.Initialize();
         }
@@ -60,7 +62,7 @@ namespace Prod_em_on_Team1
             _camera.Follow(_player);
             _timer.Update(gameTime);
             _player.Update();
-            map1.Update(Content, _player);
+          
             
 
             base.Update(gameTime);
@@ -68,13 +70,13 @@ namespace Prod_em_on_Team1
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.DarkBlue);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin(transformMatrix: _camera.Transform);
             //_spriteBatch.Begin();
 
-            map1.Draw(_spriteBatch);
             _player.Draw(gameTime, _spriteBatch);
-
+            map1.Draw(_spriteBatch);
+            tempBoard.Draw(gameTime, _spriteBatch);
 
             _spriteBatch.End();
 
