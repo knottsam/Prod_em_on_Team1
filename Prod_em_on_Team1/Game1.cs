@@ -14,6 +14,9 @@ namespace Prod_em_on_Team1
         private Camera _camera;
         public static int ScreenHeight, ScreenWidth, MaxSpeed;
 
+
+        private BikeTempBar _bikeTempBar;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -35,6 +38,7 @@ namespace Prod_em_on_Team1
             _camera = new Camera();
             _player = new Player(new Vector2(468, 468), new Rectangle(468, 468, 32, 32), 0, new Vector2(0, 0));
             UI_Manager.CreateUI(Content, _player);
+            _bikeTempBar = new BikeTempBar(Content, new Vector2(300, 700), new Vector2(300, 700));
             base.Initialize();
         }
 
@@ -58,6 +62,7 @@ namespace Prod_em_on_Team1
                 _camera.Follow(_player);
                 _timer.Update(gameTime);
                 _player.Update(gameTime);
+                _bikeTempBar.Update(_player);
             }
 
             base.Update(gameTime);
@@ -71,6 +76,7 @@ namespace Prod_em_on_Team1
                 _spriteBatch.Begin(transformMatrix: _camera.Transform);
                 UI_Manager.Draw(gameTime, _spriteBatch);
                 _player.Draw(gameTime, _spriteBatch);
+                _bikeTempBar.Draw(_spriteBatch);
             }
             else
             {
