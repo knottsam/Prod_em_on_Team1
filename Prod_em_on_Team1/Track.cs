@@ -9,15 +9,26 @@ namespace Prod_em_on_Team1
     internal class Track
     {
         private Tile[,] _map;
-        private int _mapLength, a;
+        private int _mapLength;
         private Gate[] _gates;
+        private Point walls = new Point(1, 92);
+        private Point crowd = new Point(1, 92);
+        private Tile[,] grassTiles;
+        private Tile[,] wallTiles;
+        private Tile[,] crowdTiles;
         public Track(ContentManager content)
         {
+            grassTiles = new Tile[6, 920];
+            wallTiles = new Tile[walls.X, walls.Y];
+            crowdTiles = new Tile[crowd.X, crowd.Y];
+
+
             Random rnd = new Random();
             Texture2D[] textures = new Texture2D[3];
             Texture2D potholeTexture = content.Load<Texture2D>($"pothole1");
-            Texture2D rampTexture = content.Load<Texture2D>($"ramp1");
-            _mapLength = 120;
+            Texture2D rampTexture = content.Load<Texture2D>($"ramp2");
+            Texture2D finishTexture = content.Load<Texture2D>($"finish line");
+            _mapLength = 731;
             _map = new Tile[_mapLength, 6];
 
             for (int i = 0; i < 3; i++)
@@ -26,6 +37,23 @@ namespace Prod_em_on_Team1
             }
 
 
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 920; j++)
+                {
+                    grassTiles[i, j] = new(content.Load<Texture2D>("grassTileExciteBike"), new(j * 32, 264 + i * 32), "thing");
+
+                }
+            }
+
+            for (int i = 0; i < walls.Y; i++)
+            {
+                wallTiles[0, i] = new(content.Load<Texture2D>($"wall with logo"), new(i * 10 * 32, 181 + 32), "thing");
+            }
+            for (int i = 0; i < walls.Y; i++)
+            {
+                crowdTiles[0, i] = new(content.Load<Texture2D>($"ExcitebikeCrowd"), new(i * 10 * 32, 60 + 32), "thing");
+            }
 
 
             string line = "";
@@ -49,7 +77,10 @@ namespace Prod_em_on_Team1
 
                         case '2':
                             _map[j, i] = new Tile(rampTexture, new Vector2(468 + j * 32, 530 + i * 32), "ramp");
-                            a = j;
+                            break;
+
+                        case '3':
+                            _map[j, i] = new Tile(finishTexture, new Vector2(468 + j * 32, 530 + i * 32), "finish line");
                             break;
                     }
                 }
@@ -72,6 +103,16 @@ namespace Prod_em_on_Team1
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            for (int y = 0; y < 920; y++)
+            {
+                for (int x = 0; x < 6; x++) grassTiles[x, y].Draw(spriteBatch);
+            }
+
+            for (int y = 0; y < walls.Y; y++)
+            {
+                wallTiles[0, y].Draw(spriteBatch);
+                crowdTiles[0, y].Draw(spriteBatch);
+            }
 
             for (int i = 0; i < _mapLength; i++)
             {
@@ -100,6 +141,8 @@ namespace Prod_em_on_Team1
             {
                 gate.Draw(spriteBatch);
             }
+
+            
         }
 
         public void OpenGates()

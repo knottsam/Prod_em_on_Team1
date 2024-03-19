@@ -31,7 +31,7 @@ namespace Prod_em_on_Team1
             ScreenHeight = _graphics.PreferredBackBufferHeight;
             ScreenWidth = _graphics.PreferredBackBufferWidth;
            
-            MaxSpeed = 10;
+            MaxSpeed = 30;
 
             
             _timer = new Timer();

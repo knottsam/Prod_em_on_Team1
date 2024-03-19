@@ -71,7 +71,7 @@ public class Tile
                     player.AngleOfRotation = -0.8f;
                 }
                 
-                if(player.Position.X >= _position.X && player.Position.X <= _position.X + 10)
+                if(player.Position.X >= _position.X && player.Position.X <= _position.X + 10)// if(player.Box.Intersects(new Rectangle((int)_position.X, (int)_position.Y, 2, 100)))
                 {
                     player.Speed -= new Vector2(0, 6);
                 }
