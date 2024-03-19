@@ -22,7 +22,10 @@ public class TrackMap
 	public Point mapSize { get; private set; }
 
 
-
+	public void Update(ContentManager content, Player player)
+	{
+		
+    }
 
 	
     public TrackMap(ContentManager content)

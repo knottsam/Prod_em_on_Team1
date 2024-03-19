@@ -44,27 +44,25 @@ namespace Prod_em_on_Team1
             Origin = new Vector2(_textureForward.Width / 2, _textureForward.Height / 2);
         }
 
-        public void sortTemperature() { 
-            
-        }
-
-
-        public override void Update()
+        public void Update(Tile[,] tiles)
         {
             _texture = _textureForward;
             _groundPosition = 468 + (32 * _lane);
 
             _box.X = (int)_position.X;
             _box.Y = (int)_position.Y;
-            _box.Width = 32;
-            _box.Height = 32;
+            _box.Width = (int)_textureForward.Width;
+            _box.Height = (int)_textureForward.Height;
 
+            CollisionWithPothole(tiles);
             Physics();
             Controls();
             
         }
 
-        public void Collision()
+
+
+        public void CollisionWithPothole(Tile[,] tiles)
         {
             _speed.X -= 0.25f;
             
